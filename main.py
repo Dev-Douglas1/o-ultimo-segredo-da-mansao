@@ -655,13 +655,17 @@ class Interface:
         self.botao(796, 645, 198, 'MENU [ESC]', self.menu)
         for objeto in sala['objetos']:
             x1,y1,x2,y2 = objeto['pos']
-            # As coordenadas são relativas à imagem 640x360, exibida em 960x450.
-            a,b,c,d = 32+int(x1*1.5), 72+int(y1*1.25), 32+int(x2*1.5), 72+int(y2*1.25)
-            # A área clicável fica invisível; o jogador só vê a arte do cenário.
-            self.alvos.append(((a,b,c,d), lambda o=objeto: self.investigar(o), objeto))
-            # Pequeno marcador de investigação; não cobre a arte do cenário.
-            self.canvas.create_text(c-8, b+8, text='✦', fill='#f0bd69',
-                                    font=('Consolas', 13, 'bold'))
+            # Coordenadas JSON na grade-base 640x360, convertidas para o canvas 1024x528.
+            escala_x = 1024 / 640
+            escala_y = 464 / 360
+            a = max(0, min(1024, int(x1 * escala_x)))
+            b = max(64, min(528, int(64 + y1 * escala_y)))
+            x2_canvas = max(0, min(1024, int(x2 * escala_x)))
+            y2_canvas = max(64, min(528, int(64 + y2 * escala_y)))
+            if x2_canvas > a and y2_canvas > b:
+                self.alvos.append(((a,b,x2_canvas,y2_canvas), lambda o=objeto: self.investigar(o), objeto))
+                self.canvas.create_text(x2_canvas-8, b+8, text='✦', fill='#f0bd69',
+                                        font=('Consolas', 13, 'bold'))
         self.registrar_cliques()
         self.canvas.bind('<Motion>', self.atualizar_hover)
         self.iniciar_ambiente_animado()
