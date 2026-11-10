@@ -364,28 +364,37 @@ class Interface:
         self.tela = 'menu'
         self.musica()
         self.limpar()
-        # A arte principal é um cenário ilustrado independente; os hotspots
-        # invisíveis preservam a funcionalidade real dos itens do menu.
         caminho = ASSETS / 'menu_principal.png'
         if caminho.exists():
             self.imagem('menu_principal', 0, 0)
         else:
             self.retangulo(0, 0, 1024, 700, '#101522')
             self.texto_canvas(512, 250, 'ARTE DO MENU NÃO ENCONTRADA', 18, self.ouro)
-            self.texto_canvas(512, 290, 'Coloque menu_principal.png dentro de assets/', 12, self.texto)
+            self.texto_canvas(512, 290, 'Extraia o pacote visual na pasta do projeto.', 12, self.texto)
 
-        # Coordenadas proporcionais à arte 1024x576.
-        self.alvos.append(((88, 188, 274, 235), self.nova))
+        # Painel lateral integrado à arte, com botões reais do jogo.
+        self.retangulo(18, 20, 350, 680, '#100d18', '#d49a45')
+        self.retangulo(25, 27, 343, 673, '#100d18', '#65452f')
+        self.texto_canvas(184, 78, 'O ÚLTIMO', 25, '#f7d28b')
+        self.texto_canvas(184, 111, 'SEGREDO DA', 23, '#f7d28b')
+        self.texto_canvas(184, 145, 'MANSÃO', 34, '#f7d28b')
+        self.retangulo(80, 169, 288, 172, '#c48a3d', '#c48a3d')
+        self.texto_canvas(184, 198, 'ARQUIVO DE INVESTIGAÇÃO', 9, '#8ed8d1')
+        self.texto_canvas(184, 224, 'A casa muda. A verdade também.', 10, '#eee0c9')
+        self.botao(48, 258, 272, 'NOVA INVESTIGAÇÃO', self.nova)
         if self.jogo.estado.get('status') == 'jogando':
-            self.alvos.append(((88, 235, 274, 274), self.jogar))
+            self.botao(48, 307, 272, 'RETOMAR INVESTIGAÇÃO', self.jogar)
         else:
-            self.alvos.append(((88, 235, 274, 274), self.ajuda))
-        self.alvos.append(((88, 274, 174, 315), self.historico))
-        self.alvos.append(((184, 274, 294, 315), self.conquistas))
-        self.alvos.append(((88, 334, 280, 378), self.alternar_som))
-        self.alvos.append(((88, 378, 280, 423), self.raiz.destroy))
-        self.canvas.bind('<Button-1>', self.clique)
-        self.canvas.config(cursor='hand2')
+            self.botao(48, 307, 272, 'COMO JOGAR', self.ajuda)
+        self.botao(48, 356, 130, 'HISTÓRICO', self.historico)
+        self.botao(190, 356, 130, 'CONQUISTAS', self.conquistas)
+        self.botao(48, 405, 272, 'ÁUDIO: ' + ('ATIVO' if self.som_ativo else 'MUDO'), self.alternar_som)
+        self.botao(48, 454, 272, 'SAIR', self.raiz.destroy)
+        self.texto_canvas(184, 552, 'CONTROLES', 9, '#c18b50')
+        self.texto_canvas(184, 578, 'E  EXAMINAR', 10, '#d6d8df')
+        self.texto_canvas(184, 600, 'I  INVENTÁRIO  •  F2  LENTE', 9, '#d6d8df')
+        self.texto_canvas(184, 644, 'A CASA LEMBRA DE TUDO.', 9, '#f0b96b')
+        self.registrar_cliques()
 
     def alternar_som(self):
         self.som_ativo = not self.som_ativo
