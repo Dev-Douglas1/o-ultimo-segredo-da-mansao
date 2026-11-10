@@ -4,6 +4,7 @@ Modo --terminal demonstra input(), while, for, if/elif/else.
 """
 import json
 import os
+import random
 import sys
 import time
 import tkinter as tk
@@ -35,7 +36,7 @@ def gravar(nome, dados):
 def estado_novo(nome, segundos):
     return dict(jogador=nome, status='jogando', sala=0, inventario=[], vistos=[],
                 resolvidos=[], tentativas={}, dicas=0, tempo_restante=segundos,
-                conquistas=[], alerta=0, inicio=datetime.now().isoformat(timespec='seconds'))
+                conquistas=[], alerta=0, campanha={}, inicio=datetime.now().isoformat(timespec='seconds'))
 
 
 class Motor:
