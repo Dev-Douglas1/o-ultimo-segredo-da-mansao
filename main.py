@@ -589,15 +589,30 @@ class Interface:
             for registro in reversed(self.alvos):
                 if len(registro) != 3 or registro[2]['id'] != alvo:
                     continue
-                caixa = registro[0]
-                x1, y1, x2, y2 = caixa
-                self.canvas.create_rectangle(x1, y1, x2, y2, outline='#f4c77b',
-                                             width=2, dash=(5, 3), tags='hover_fx')
-                self.canvas.create_rectangle(x1+4, y1+4, x2-4, y2-4,
-                                             outline='#53d7ce', width=1, tags='hover_fx')
-                self.canvas.create_text((x1+x2)//2, max(75,y1-12),
-                                        text='✦ EXAMINAR', fill='#f4c77b',
-                                        font=('Consolas', 9, 'bold'), tags='hover_fx')
+                x1, y1, x2, y2 = registro[0]
+                # Realce discreto: quatro cantos finos, sem contorno tracejado
+                # cobrindo o objeto nem ícones permanentes sobre a arte.
+                cor = '#f2c77e'
+                tamanho = min(13, max(7, (x2-x1)//5), max(7, (y2-y1)//5))
+                largura = 2
+                segmentos = [
+                    (x1, y1, x1+tamanho, y1), (x1, y1, x1, y1+tamanho),
+                    (x2-tamanho, y1, x2, y1), (x2, y1, x2, y1+tamanho),
+                    (x1, y2, x1+tamanho, y2), (x1, y2-tamanho, x1, y2),
+                    (x2-tamanho, y2, x2, y2), (x2, y2-tamanho, x2, y2)
+                ]
+                for xa, ya, xb, yb in segmentos:
+                    self.canvas.create_line(xa, ya, xb, yb, fill=cor,
+                                            width=largura, tags='hover_fx')
+                # Etiqueta pequena aparece somente enquanto o mouse está sobre o alvo.
+                cx = (x1+x2)//2
+                label_y = max(76, y1-15)
+                self.canvas.create_rectangle(cx-39, label_y-9, cx+39, label_y+9,
+                                             fill='#101522', outline='#80603d',
+                                             width=1, tags='hover_fx')
+                self.canvas.create_text(cx, label_y, text='EXAMINAR',
+                                        fill='#e8c58d', font=('Consolas', 8, 'bold'),
+                                        tags='hover_fx')
                 break
 
     def jogar(self):
@@ -640,9 +655,10 @@ class Interface:
             x2_canvas = max(0, min(1024, int(x2 * escala_x)))
             y2_canvas = max(64, min(528, int(64 + y2 * escala_y)))
             if x2_canvas > a and y2_canvas > b:
-                self.alvos.append(((a,b,x2_canvas,y2_canvas), lambda o=objeto: self.investigar(o), objeto))
-                self.canvas.create_text(x2_canvas-8, b+8, text='✦', fill='#f0bd69',
-                                        font=('Consolas', 13, 'bold'))
+                # A área clicável usa exatamente o retângulo definido para o objeto
+                # no JSON. Não desenhamos marcadores sobre a ilustração em repouso.
+                self.alvos.append(((a,b,x2_canvas,y2_canvas),
+                                   lambda o=objeto: self.investigar(o), objeto))
         self.registrar_cliques()
         self.canvas.bind('<Motion>', self.atualizar_hover)
         self.iniciar_ambiente_animado()
