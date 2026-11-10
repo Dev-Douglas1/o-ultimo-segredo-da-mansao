@@ -227,6 +227,8 @@ class Interface:
         self.timer_texto = None
         self.intro_pagina = 0
         self.raiz.bind('<Escape>', lambda e: self.menu())
+        self.raiz.bind('<Return>', lambda e: self.proxima_intro() if self.tela == 'intro' else None)
+        self.raiz.bind('<space>', lambda e: self.proxima_intro() if self.tela == 'intro' else None)
         self.raiz.bind('<F1>', lambda e: self.mostrar_dica() if self.tela == 'jogo' else None)
         self.raiz.bind('<i>', lambda e: self.inventario() if self.tela == 'jogo' else None)
         self.raiz.protocol('WM_DELETE_WINDOW', self.sair)
@@ -367,7 +369,7 @@ class Interface:
         self.texto_canvas(512, 235, titulo, 17, '#f0c77e')
         self.intro_texto_id = self.canvas.create_text(
             150, 295, text='', fill=self.texto, width=720, anchor='nw',
-            font=('Consolas', 15, 'bold'), spacing1=5, spacing2=5
+            font=('Consolas', 15, 'bold')
         )
         self.intro_corpo = corpo
         self.intro_pos = 0
