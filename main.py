@@ -573,47 +573,34 @@ class Interface:
         if self.tela != 'jogo':
             return
         alvo = None
+        caixa_alvo = None
         for registro in reversed(self.alvos):
             if len(registro) != 3:
                 continue
-            caixa, funcao, objeto = registro
+            caixa, _, objeto = registro
             x1, y1, x2, y2 = caixa
             if x1 <= evento.x <= x2 and y1 <= evento.y <= y2:
                 alvo = objeto['id']
+                caixa_alvo = caixa
                 break
         self.canvas.delete('hover_fx')
         if alvo != self.hover_alvo:
             self.hover_alvo = alvo
             self.canvas.config(cursor='hand2' if alvo else 'arrow')
-        if alvo:
-            for registro in reversed(self.alvos):
-                if len(registro) != 3 or registro[2]['id'] != alvo:
-                    continue
-                x1, y1, x2, y2 = registro[0]
-                # Realce discreto: quatro cantos finos, sem contorno tracejado
-                # cobrindo o objeto nem ícones permanentes sobre a arte.
-                cor = '#f2c77e'
-                tamanho = min(13, max(7, (x2-x1)//5), max(7, (y2-y1)//5))
-                largura = 2
-                segmentos = [
-                    (x1, y1, x1+tamanho, y1), (x1, y1, x1, y1+tamanho),
-                    (x2-tamanho, y1, x2, y1), (x2, y1, x2, y1+tamanho),
-                    (x1, y2, x1+tamanho, y2), (x1, y2-tamanho, x1, y2),
-                    (x2-tamanho, y2, x2, y2), (x2, y2-tamanho, x2, y2)
-                ]
-                for xa, ya, xb, yb in segmentos:
-                    self.canvas.create_line(xa, ya, xb, yb, fill=cor,
-                                            width=largura, tags='hover_fx')
-                # Etiqueta pequena aparece somente enquanto o mouse está sobre o alvo.
-                cx = (x1+x2)//2
-                label_y = max(76, y1-15)
-                self.canvas.create_rectangle(cx-39, label_y-9, cx+39, label_y+9,
-                                             fill='#101522', outline='#80603d',
-                                             width=1, tags='hover_fx')
-                self.canvas.create_text(cx, label_y, text='EXAMINAR',
-                                        fill='#e8c58d', font=('Consolas', 8, 'bold'),
+        if caixa_alvo:
+            # Indicação mínima: pequenos cantos finos, sem caixa tracejada,
+            # moldura completa ou etiqueta sobre a ilustração.
+            x1, y1, x2, y2 = caixa_alvo
+            tamanho = 7
+            cor = '#c5a477'
+            for xa, ya, xb, yb in (
+                (x1, y1, x1+tamanho, y1), (x1, y1, x1, y1+tamanho),
+                (x2-tamanho, y1, x2, y1), (x2, y1, x2, y1+tamanho),
+                (x1, y2, x1+tamanho, y2), (x1, y2-tamanho, x1, y2),
+                (x2-tamanho, y2, x2, y2), (x2, y2-tamanho, x2, y2)
+            ):
+                self.canvas.create_line(xa, ya, xb, yb, fill=cor, width=1,
                                         tags='hover_fx')
-                break
 
     def jogar(self):
         if self.jogo.estado.get('status') != 'jogando':
