@@ -93,7 +93,7 @@ class Motor:
                 if obj['id'] == 'retrato':
                     obj['texto'] = f"Fotografia datada de {campanha['ano']}. O selo da família é uma {campanha['selo']}."
                 elif obj['id'] == 'livro':
-                    obj['texto'] = f"Anotação: {campanha['desaparecida']} desapareceu em {campanha['ano']}. O código está escrito nas margens."
+                    obj['texto'] = f"Anotação: {campanha['desaparecida']} desapareceu em {campanha['ano']}. Nas margens, os números aparecem separados por pontos: {' · '.join(campanha['codigo_cofre'])}."
                 elif obj['id'] == 'carta':
                     obj['texto'] = f"Bilhete: 'A sequência dos sinos foi {', '.join(campanha['codigo_armario'])}. Não ignore a ordem dos acontecimentos.'"
                 elif obj['id'] == 'vela':
