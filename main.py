@@ -637,7 +637,7 @@ class Interface:
         agora = time.monotonic()
         intervalo = agora - self.ultimo_tick
         self.ultimo_tick = agora
-        if self.tela == 'jogo' and self.jogo.estado.get('status') == 'jogando':
+        if self.tela in ('jogo', 'mecanismo') and self.jogo.estado.get('status') == 'jogando':
             self.jogo.estado['tempo_restante'] = max(0, self.jogo.estado['tempo_restante'] - int(intervalo + 0.5))
             if self.jogo.estado['tempo_restante'] <= 0:
                 self.jogo.finalizar('Tempo esgotado')
