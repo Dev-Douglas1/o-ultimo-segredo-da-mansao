@@ -287,6 +287,7 @@ class Interface:
         self.raiz.bind('<Return>', lambda e: self.proxima_intro() if self.tela == 'intro' else None)
         self.raiz.bind('<space>', lambda e: self.proxima_intro() if self.tela == 'intro' else None)
         self.raiz.bind('<F1>', lambda e: self.mostrar_dica() if self.tela == 'jogo' else None)
+        self.raiz.bind('<F2>', lambda e: self.usar_lente() if self.tela == 'jogo' else None)
         self.raiz.bind('<i>', lambda e: self.inventario() if self.tela == 'jogo' else None)
         self.raiz.protocol('WM_DELETE_WINDOW', self.sair)
         self.menu()
@@ -525,6 +526,7 @@ class Interface:
         self.texto_canvas(30, 581, 'CLIQUE NOS OBJETOS ILUMINADOS PARA INVESTIGAR', 11, self.ouro, ancora='nw')
         self.botao(28, 628, 180, 'INVENTÁRIO [I]', self.inventario)
         self.botao(222, 628, 180, 'PISTA [F1]', self.mostrar_dica)
+        self.botao(222, 578, 180, 'LENTE [F2]', self.usar_lente)
         self.botao(416, 628, 180, 'SALVAR', self.salvar)
         self.botao(610, 628, 180, 'CONQUISTAS', self.conquistas)
         self.botao(804, 628, 190, 'MENU [ESC]', self.menu)
@@ -675,6 +677,23 @@ class Interface:
     def inventario(self):
         itens = self.jogo.estado.get('inventario', [])
         self.painel_texto('INVENTÁRIO', ['• ' + item for item in itens] or ['Seu inventário está vazio.'])
+
+    def usar_lente(self):
+        campanha = self.jogo.estado.get('campanha', {})
+        sala = self.jogo.sala['id']
+        pistas = {
+            'hall': f"A lente revela uma inscrição quase apagada: {campanha.get('ano', '1987')} não é uma data comemorativa. É o dia do desaparecimento.",
+            'biblioteca': "Sob a tinta do globo há marcas de pressão. Compare as posições com as anotações do livro; a ordem importa mais que os números.",
+            'escritorio': "A lente revela pequenos riscos no mostrador. Os ponteiros foram movidos para esconder a ordem dos sinos.",
+            'porao': f"Na cera, a lente mostra marcas de raspagem. As letras {campanha.get('codigo_painel', 'LUZ')} devem ser lidas na direção indicada pela chama.",
+            'camara': f"A lente revela o selo {campanha.get('selo', 'corvo')} repetido atrás do altar. A mesma marca aparece no primeiro documento."
+        }
+        self.jogo.estado['tempo_restante'] = max(0, self.jogo.estado.get('tempo_restante', 0) - 30)
+        self.jogo.estado['lente_usos'] = self.jogo.estado.get('lente_usos', 0) + 1
+        self.jogo.salvar()
+        self.som('acerto')
+        messagebox.showinfo('Lente de investigação', pistas.get(sala, 'A lente revela marcas escondidas na superfície.'))
+        self.jogar()
 
     def mostrar_dica(self):
         dica = self.jogo.dica()
