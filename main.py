@@ -364,118 +364,28 @@ class Interface:
         self.tela = 'menu'
         self.musica()
         self.limpar()
-        cv = self.canvas
-
-        # CENA ORIGINAL: salão antigo da mansão, em pixel art lateral.
-        cv.create_rectangle(0, 0, 1024, 700, fill='#090d18', outline='')
-        cv.create_rectangle(0, 0, 1024, 492, fill='#17232c', outline='')
-        # Painéis de madeira e papel de parede envelhecido.
-        cv.create_rectangle(345, 35, 1005, 490, fill='#26333a', outline='#111925', width=8)
-        for x in range(355, 1000, 82):
-            cv.create_rectangle(x, 45, x+5, 485, fill='#43504a', outline='')
-            cv.create_line(x+8, 50, x+8, 480, fill='#17232c', width=3)
-        cv.create_rectangle(355, 62, 1000, 68, fill='#967047', outline='')
-        cv.create_rectangle(355, 475, 1000, 484, fill='#967047', outline='')
-        # Papel de parede com pequenos motivos geométricos.
-        for x in range(370, 1000, 38):
-            for y in range(88, 460, 42):
-                cv.create_polygon(x, y-5, x+5, y, x, y+5, x-5, y,
-                                  fill='#53605a', outline='#34433f')
-        # Janela alta com chuva e luz fria.
-        cv.create_rectangle(690, 88, 850, 335, fill='#101c2b', outline='#b18a57', width=9)
-        cv.create_rectangle(701, 99, 839, 324, fill='#153449', outline='#526a68', width=3)
-        cv.create_rectangle(766, 100, 772, 324, fill='#a17a4d', outline='')
-        cv.create_rectangle(702, 207, 838, 213, fill='#a17a4d', outline='')
-        for k in range(18):
-            x = 710 + (k*31) % 122
-            y = 110 + (k*47) % 195
-            cv.create_line(x, y, x-8, y+20, fill='#55a8ad', width=2)
-        cv.create_rectangle(738, 160, 806, 242, fill='#e0a65f', outline='')
-        cv.create_rectangle(745, 168, 799, 235, fill='#f2c87e', outline='')
-        # Cortinas pesadas.
-        cv.create_polygon(675, 65, 716, 65, 710, 355, 680, 328, fill='#432c42', outline='#9b5c77', width=3)
-        cv.create_polygon(825, 65, 865, 65, 859, 330, 832, 355, fill='#432c42', outline='#9b5c77', width=3)
-        # Quadros e máscaras na parede.
-        cv.create_rectangle(390, 115, 500, 255, fill='#493a36', outline='#bd925b', width=7)
-        cv.create_rectangle(400, 125, 490, 245, fill='#19232d', outline='#8a654b', width=3)
-        cv.create_oval(424, 145, 466, 204, fill='#d0a878', outline='#6f4b40', width=3)
-        cv.create_polygon(421, 190, 470, 190, 480, 232, 412, 232, fill='#345b58', outline='#b48b5c', width=3)
-        cv.create_rectangle(535, 120, 625, 235, fill='#352b34', outline='#b78c56', width=6)
-        cv.create_polygon(580, 137, 604, 166, 596, 207, 565, 207, 556, 166,
-                          fill='#bd644e', outline='#f0bd78', width=3)
-        cv.create_oval(568, 155, 578, 166, fill='#f6d58c', outline='')
-        cv.create_oval(589, 155, 599, 166, fill='#f6d58c', outline='')
-        # Lustre central com luz quente.
-        cv.create_line(570, 0, 570, 72, fill='#a77b4c', width=5)
-        cv.create_line(500, 80, 640, 80, fill='#b58a53', width=5)
-        for x in (505, 548, 592, 635):
-            cv.create_line(x, 80, x, 101, fill='#b58a53', width=4)
-            cv.create_polygon(x-13, 102, x+13, 102, x+8, 119, x-8, 119,
-                              fill='#f3c36d', outline='#a36b3c', width=2)
-            cv.create_oval(x-22, 96, x+22, 138, fill='#e6a95b', outline='', stipple='gray50')
-        # Lareira acesa e moldura de pedra.
-        cv.create_rectangle(860, 300, 1000, 485, fill='#55413b', outline='#b58a59', width=8)
-        cv.create_rectangle(875, 325, 985, 480, fill='#171b27', outline='#9b7048', width=5)
-        cv.create_rectangle(868, 291, 992, 315, fill='#98704d', outline='#d3a66b', width=4)
-        cv.create_polygon(883, 468, 895, 402, 918, 370, 930, 415, 948, 378,
-                          977, 470, fill='#ed713c', outline='#ffbd68', width=3)
-        cv.create_polygon(906, 470, 920, 420, 936, 444, 950, 410, 966, 470,
-                          fill='#ffd06d', outline='')
-        # Estante baixa, livros e objetos.
-        cv.create_rectangle(365, 345, 505, 468, fill='#573a31', outline='#b58a59', width=6)
-        cv.create_rectangle(375, 355, 495, 405, fill='#202a32', outline='#8f6949', width=3)
-        cv.create_rectangle(375, 412, 495, 458, fill='#202a32', outline='#8f6949', width=3)
-        for x, cor in [(384,'#b75d4e'),(398,'#d4a15d'),(414,'#547f78'),(430,'#9a6685'),(447,'#c28b4d'),(465,'#4f777e')]:
-            cv.create_rectangle(x, 360, x+9, 402, fill=cor, outline='#e0bd83')
-            cv.create_rectangle(x, 417, x+10, 455, fill=cor, outline='#e0bd83')
-        # Poltrona e mesa com silhuetas de pixel art.
-        cv.create_rectangle(520, 385, 670, 460, fill='#613d3b', outline='#b17a55', width=5)
-        cv.create_rectangle(535, 355, 655, 415, fill='#79504a', outline='#c18a5c', width=5)
-        cv.create_rectangle(540, 455, 550, 492, fill='#a4774e', outline='')
-        cv.create_rectangle(642, 455, 652, 492, fill='#a4774e', outline='')
-        cv.create_rectangle(560, 335, 628, 365, fill='#243e43', outline='#c18a5c', width=3)
-        cv.create_rectangle(575, 320, 612, 338, fill='#e5b66e', outline='#8c5b3d', width=2)
-        # Piso de madeira em perspectiva e rodapé.
-        cv.create_rectangle(0, 490, 1024, 700, fill='#171923', outline='')
-        cv.create_polygon(0, 510, 1024, 510, 1024, 700, 0, 700,
-                          fill='#302630', outline='#a2764c', width=4)
-        for y in (550, 600, 655):
-            cv.create_line(0, y, 1024, y+10, fill='#65463d', width=3)
-        for x in range(-100, 1100, 130):
-            cv.create_line(510, 510, x, 700, fill='#5c4039', width=2)
-        # Tapete central.
-        cv.create_polygon(350, 515, 780, 515, 930, 690, 210, 690,
-                          fill='#382b42', outline='#b36c78', width=5)
-        cv.create_polygon(380, 530, 750, 530, 865, 675, 275, 675,
-                          fill='#493247', outline='#8c5969', width=3)
-        for x in range(360, 780, 42):
-            cv.create_rectangle(x, 585, x+5, 590, fill='#d29a60', outline='')
-        # Pequenas partículas luminosas.
-        for x, y in [(475,280),(650,300),(830,370),(720,420),(550,290),(970,250),(400,300)]:
-            cv.create_rectangle(x, y, x+3, y+3, fill='#e9b96e', outline='')
-
-        # Cartela de menu compacta, integrada à cena; deixa o cenário ocupar a tela.
-        cv.create_rectangle(20, 22, 342, 678, fill='#0b111d', outline='#a87849', width=3)
-        cv.create_rectangle(28, 30, 334, 670, outline='#3e5960', width=2)
-        self.texto_canvas(181, 82, 'O ÚLTIMO', 24, '#f1c77f')
-        self.texto_canvas(181, 113, 'SEGREDO', 30, '#f1c77f')
-        self.texto_canvas(181, 145, 'DA MANSÃO', 19, '#f1c77f')
-        cv.create_rectangle(70, 171, 292, 174, fill='#b98752', outline='')
-        self.texto_canvas(181, 198, 'ARQUIVO DE INVESTIGAÇÃO', 9, '#8fd2c9')
-        self.texto_canvas(181, 225, 'A casa muda. A verdade também.', 10, '#e8dfce')
-        self.botao(52, 265, 258, 'NOVA INVESTIGAÇÃO', self.nova)
-        if self.jogo.estado.get('status') == 'jogando':
-            self.botao(52, 315, 258, 'RETOMAR INVESTIGAÇÃO', self.jogar)
+        # A arte principal é um cenário ilustrado independente; os hotspots
+        # invisíveis preservam a funcionalidade real dos itens do menu.
+        caminho = ASSETS / 'menu_principal.png'
+        if caminho.exists():
+            self.imagem('menu_principal', 0, 0)
         else:
-            self.botao(52, 315, 258, 'COMO JOGAR', self.ajuda)
-        self.botao(52, 365, 122, 'HISTÓRICO', self.historico)
-        self.botao(188, 365, 122, 'CONQUISTAS', self.conquistas)
-        self.botao(52, 415, 258, 'ÁUDIO: ' + ('ATIVO' if self.som_ativo else 'MUDO'), self.alternar_som)
-        self.texto_canvas(181, 505, 'CONTROLES', 9, '#c28c5a')
-        self.texto_canvas(181, 530, 'E  EXAMINAR', 10, '#b7c8ce')
-        self.texto_canvas(181, 552, 'I  INVENTÁRIO  •  F2  LENTE', 9, '#b7c8ce')
-        self.texto_canvas(181, 624, 'A CASA LEMBRA DE TUDO.', 9, '#f0b96b')
-        self.registrar_cliques()
+            self.retangulo(0, 0, 1024, 700, '#101522')
+            self.texto_canvas(512, 250, 'ARTE DO MENU NÃO ENCONTRADA', 18, self.ouro)
+            self.texto_canvas(512, 290, 'Coloque menu_principal.png dentro de assets/', 12, self.texto)
+
+        # Coordenadas proporcionais à arte 1024x576.
+        self.alvos.append(((88, 188, 274, 235), self.nova))
+        if self.jogo.estado.get('status') == 'jogando':
+            self.alvos.append(((88, 235, 274, 274), self.jogar))
+        else:
+            self.alvos.append(((88, 235, 274, 274), self.ajuda))
+        self.alvos.append(((88, 274, 174, 315), self.historico))
+        self.alvos.append(((184, 274, 294, 315), self.conquistas))
+        self.alvos.append(((88, 334, 280, 378), self.alternar_som))
+        self.alvos.append(((88, 378, 280, 423), self.raiz.destroy))
+        self.canvas.bind('<Button-1>', self.clique)
+        self.canvas.config(cursor='hand2')
 
     def alternar_som(self):
         self.som_ativo = not self.som_ativo
