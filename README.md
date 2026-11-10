@@ -118,3 +118,24 @@ A campanha oferece 20 minutos por partida, três tentativas por mecanismo, penal
 ## Mecanismos interativos inspirados em aventuras de caixas de enigmas
 
 Os cofres e painéis de senha agora abrem uma tela própria de mecanismo. O jogador gira discos numéricos ou alfabéticos com os botões de seta e precisa montar a combinação antes de testar. O cronômetro continua ativo enquanto o mecanismo está aberto; erros aplicam as penalidades normais do jogo. Esta implementação é uma adaptação 2D original para Tkinter, não uma reprodução dos recursos 3D ou dos controles por toque de The Room.
+
+
+## Campanha procedural: uma investigação diferente a cada partida
+
+Cada nova partida gera e salva sua própria campanha. A geração altera:
+- ano do desaparecimento e identidade da pessoa desaparecida;
+- suspeito e motivo central da conspiração;
+- selo da família e frase-chave da investigação;
+- três combinações secretas diferentes;
+- tipo de interação de cada mecanismo (discos giratórios ou seleção de caracteres por teclado);
+- pistas e documentos que são reconstruídos a partir da campanha gerada.
+
+A campanha fica registrada em `dados/progresso.json`. Ao escolher **Continuar**, o jogo restaura a mesma combinação e a mesma narrativa da partida salva. Somente **Nova partida** sorteia outro caso.
+
+### Ferramentas de investigação
+
+- **Lente [F2]**: revela uma observação oculta específica do cômodo e consome 30 segundos.
+- **Pista [F1]**: oferece uma orientação mais direta e consome 90 segundos.
+- Os mecanismos podem apresentar discos ou teclado de caracteres; a combinação é gerada para a campanha atual.
+
+A geração é procedural e combina variações narrativas e de enigmas dentro da estrutura atual de cinco cômodos. Ela não cria infinitas salas ou modelos 3D.
