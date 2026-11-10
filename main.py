@@ -526,24 +526,27 @@ class Interface:
         self.limpar()
         sala = self.jogo.sala
         self.imagem(sala['id'], 0, 0)
-        self.retangulo(0, 0, 1024, 64, '#151724')
-        self.texto_canvas(20, 20, sala['nome'], 16, self.ouro, ancora='nw')
-        self.texto_canvas(512, 20, f"ALERTA {self.jogo.estado.get('alerta', 0)}", 12, '#d88b82')
-        self.botao(340, 9, 120, 'LENTE [F2]', self.usar_lente)
+        self.retangulo(0, 0, 1024, 64, '#090d19', '#4d3b34')
+        self.retangulo(0, 61, 1024, 64, '#c18a4c')
+        self.texto_canvas(22, 18, 'O ÚLTIMO SEGREDO', 10, '#e0b66f', ancora='nw')
+        self.texto_canvas(22, 40, sala['nome'], 14, '#f4e4c8', ancora='nw')
+        self.texto_canvas(505, 29, f"ALERTA  {self.jogo.estado.get('alerta', 0)}", 11, '#ef8a83')
+        self.botao(575, 10, 112, 'LENTE [F2]', self.usar_lente)
         segundos = max(0, self.jogo.estado['tempo_restante'])
         self.timer_texto = self.texto_canvas(
-            1000, 21, f'TEMPO {segundos//60:02}:{segundos%60:02}', 15,
-            '#ff9990' if segundos < 180 else self.texto, ancora='ne'
+            1000, 29, f'{segundos//60:02}:{segundos%60:02}', 17,
+            '#ff9990' if segundos < 180 else '#f4d49a', ancora='ne'
         )
-        self.retangulo(0, 528, 1024, 700, self.painel)
-        self.texto_canvas(30, 545, sala['descricao'], 13, self.texto, 950, 'nw')
-        self.texto_canvas(30, 581, 'CLIQUE NOS OBJETOS ILUMINADOS PARA INVESTIGAR', 11, self.ouro, ancora='nw')
-        self.botao(28, 628, 180, 'INVENTÁRIO [I]', self.inventario)
-        self.botao(222, 628, 180, 'PISTA [F1]', self.mostrar_dica)
-
-        self.botao(416, 628, 180, 'SALVAR', self.salvar)
-        self.botao(610, 628, 180, 'CONQUISTAS', self.conquistas)
-        self.botao(804, 628, 190, 'MENU [ESC]', self.menu)
+        self.retangulo(0, 528, 1024, 700, '#090d19', '#7d593d')
+        self.retangulo(0, 528, 1024, 532, '#d3a15d')
+        self.texto_canvas(28, 550, 'DIÁRIO DE CAMPO  /  OBJETIVO ATUAL', 9, '#cda36d', ancora='nw')
+        self.texto_canvas(28, 570, sala['descricao'], 12, '#eee1cb', 920, 'nw')
+        self.texto_canvas(28, 610, 'E  EXAMINAR     I  INVENTÁRIO     F1  PISTA     F2  LENTE', 9, '#a8b4c7', ancora='nw')
+        self.botao(28, 645, 174, 'INVENTÁRIO [I]', self.inventario)
+        self.botao(220, 645, 174, 'PISTA [F1]', self.mostrar_dica)
+        self.botao(412, 645, 174, 'SALVAR', self.salvar)
+        self.botao(604, 645, 174, 'ARQUIVO', self.conquistas)
+        self.botao(796, 645, 198, 'MENU [ESC]', self.menu)
         for objeto in sala['objetos']:
             x1,y1,x2,y2 = objeto['pos']
             # As coordenadas são relativas à imagem 640x360, exibida em 960x450.
