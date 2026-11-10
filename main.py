@@ -334,9 +334,12 @@ class Interface:
                                        font=('Consolas', tamanho, 'bold'), width=largura,
                                        anchor=ancora, justify='center')
 
-    def botao(self, x, y, largura, titulo, comando, cor='#313b50'):
-        self.retangulo(x, y, x+largura, y+42, cor, self.ouro)
-        self.texto_canvas(x+largura//2, y+21, titulo, 12)
+    def botao(self, x, y, largura, titulo, comando, cor='#171b2b'):
+        # Botões com moldura dupla, sombra e acento luminoso em dourado.
+        self.retangulo(x+3, y+4, x+largura+3, y+46, '#090b14', '#090b14')
+        self.retangulo(x, y, x+largura, y+42, cor, '#8d633d')
+        self.retangulo(x+3, y+3, x+largura-3, y+39, cor, '#d5a45d')
+        self.texto_canvas(x+largura//2, y+21, titulo, 11, '#f4d49a')
         self.alvos.append(((x,y,x+largura,y+42), comando))
 
     def registrar_cliques(self):
@@ -362,18 +365,25 @@ class Interface:
         self.musica()
         self.limpar()
         self.imagem('capa', 0, 0)
-        self.retangulo(175, 165, 849, 555, '#171a29', '#8e6b51')
-        self.texto_canvas(512, 221, 'O ÚLTIMO SEGREDO', 31, self.ouro)
-        self.texto_canvas(512, 263, 'DA MANSÃO', 30, self.ouro)
-        self.texto_canvas(512, 306, 'ESCAPE ROOM  •  PIXEL ART  •  INVESTIGAÇÃO', 12)
-        self.botao(367, 346, 290, 'NOVA PARTIDA', self.nova)
+        # Vinheta e painel editorial: o menu parece uma tela de jogo, não um formulário.
+        self.retangulo(0, 0, 1024, 700, '#080b16')
+        self.retangulo(42, 54, 982, 646, '#111522', '#a97845')
+        self.retangulo(50, 62, 974, 638, '#171b2a', '#3d3542')
+        self.texto_canvas(512, 126, 'O ÚLTIMO SEGREDO', 29, '#f0c47e')
+        self.texto_canvas(512, 166, 'DA MANSÃO', 26, '#f0c47e')
+        self.texto_canvas(512, 204, 'UMA INVESTIGAÇÃO • UMA CASA • MUITAS VERDADES', 10, '#a9b5c8')
+        self.retangulo(105, 245, 919, 600, '#0b101d', '#6f543f')
+        self.texto_canvas(512, 276, 'REGISTRO DA INVESTIGAÇÃO', 11, '#c9a06b')
+        self.texto_canvas(512, 309, 'Cada partida revela um caso diferente.', 14, '#e8e0d2')
+        self.botao(365, 345, 294, 'NOVA INVESTIGAÇÃO', self.nova)
         if self.jogo.estado.get('status') == 'jogando':
-            self.botao(367, 398, 290, 'CONTINUAR', self.jogar)
+            self.botao(365, 395, 294, 'RETOMAR INVESTIGAÇÃO', self.jogar)
         else:
-            self.botao(367, 398, 290, 'COMO JOGAR', self.ajuda)
-        self.botao(367, 450, 140, 'HISTÓRICO', self.historico)
-        self.botao(517, 450, 140, 'CONQUISTAS', self.conquistas)
-        self.botao(367, 502, 290, 'SOM: ' + ('LIGADO' if self.som_ativo else 'DESLIGADO'), self.alternar_som)
+            self.botao(365, 395, 294, 'COMO JOGAR', self.ajuda)
+        self.botao(365, 445, 140, 'ARQUIVO', self.historico)
+        self.botao(519, 445, 140, 'RELÍQUIAS', self.conquistas)
+        self.botao(365, 495, 294, 'ÁUDIO: ' + ('ATIVO' if self.som_ativo else 'MUDO'), self.alternar_som)
+        self.texto_canvas(512, 570, 'E  INVESTIGAR     I  INVENTÁRIO     F2  LENTE     ESC  MENU', 10, '#a9b5c8')
         self.registrar_cliques()
 
     def alternar_som(self):
