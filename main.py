@@ -495,7 +495,10 @@ class Interface:
         if self.tela != 'jogo':
             return
         alvo = None
-        for caixa, funcao, objeto in reversed(self.alvos):
+        for registro in reversed(self.alvos):
+            if len(registro) != 3:
+                continue
+            caixa, funcao, objeto = registro
             x1, y1, x2, y2 = caixa
             if x1 <= evento.x <= x2 and y1 <= evento.y <= y2:
                 alvo = objeto['id']
