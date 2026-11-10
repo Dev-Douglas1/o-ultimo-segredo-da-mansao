@@ -592,6 +592,15 @@ class Interface:
         self.botao(520, 505, 190, 'VOLTAR', self.jogar)
         self.registrar_cliques()
 
+    def adicionar_caractere(self, char):
+        if len(self.mecanismo_sequencia) < self.mecanismo_tamanho:
+            self.mecanismo_sequencia += char
+            self.desenhar_mecanismo()
+
+    def apagar_sequencia(self):
+        self.mecanismo_sequencia = self.mecanismo_sequencia[:-1]
+        self.desenhar_mecanismo()
+
     def girar_disco(self, indice, sentido):
         valor = self.mecanismo_valores[indice]
         if isinstance(valor, int):
@@ -604,7 +613,7 @@ class Interface:
         self.desenhar_mecanismo()
 
     def testar_mecanismo(self):
-        resposta = ''.join(str(v) for v in self.mecanismo_valores)
+        resposta = self.mecanismo_sequencia if self.mecanismo_tipo in ('teclado', 'sequencia') else ''.join(str(v) for v in self.mecanismo_valores)
         mensagem, tipo = self.jogo.tocar_objeto(self.mecanismo_objeto, resposta)
         if tipo == 'erro':
             self.som('erro')
