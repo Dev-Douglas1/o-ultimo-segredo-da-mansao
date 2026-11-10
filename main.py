@@ -283,7 +283,7 @@ class Interface:
         self.hover_alvo = None
         self.timer_texto = None
         self.intro_pagina = 0
-        self.raiz.bind('<Escape>', lambda e: self.menu())
+        self.raiz.bind('<Escape>', lambda e: self.proxima_intro() if self.tela == 'intro' else self.menu())
         self.raiz.bind('<Return>', lambda e: self.proxima_intro() if self.tela == 'intro' else None)
         self.raiz.bind('<space>', lambda e: self.proxima_intro() if self.tela == 'intro' else None)
         self.raiz.bind('<F1>', lambda e: self.mostrar_dica() if self.tela == 'jogo' else None)
@@ -418,62 +418,32 @@ class Interface:
             self.mostrar_intro()
 
     def mostrar_intro(self):
-        """Abertura narrativa em três quadros, com texto progressivo."""
+        """Briefing visual da missão, com ações clicáveis sobre a arte."""
         self.tela = 'intro'
         self.limpar()
-        self.imagem('capa', 0, 0)
-        self.retangulo(70, 72, 954, 625, '#111522', '#b88a57')
-        paginas = [
-            (
-                "23 DE OUTUBRO DE 1987  •  23:47",
-                "A chuva cobre a estrada quando você encontra uma carta presa ao portão. "
-                "O envelope traz apenas seu nome e o selo da família Valença."
-            ),
-            (
-                "A ÚLTIMA CARTA",
-                "“Se está lendo isto, não deixe que a casa chegue à meia-noite. "
-                "O diário está na biblioteca. A verdade está enterrada no porão. "
-                "Não confie no retrato da sala.”"
-            ),
-            (
-                "A PORTA SE FECHA",
-                "Você entra para procurar respostas. A porta bate sozinha. "
-                "Um relógio antigo começa a funcionar: faltam 25 minutos para meia-noite. "
-                "A mansão parece estar observando cada movimento seu."
-            )
-        ]
-        titulo, corpo = paginas[self.intro_pagina]
-        self.texto_canvas(512, 145, 'O ÚLTIMO SEGREDO DA MANSÃO', 24, self.ouro)
-        self.texto_canvas(512, 235, titulo, 17, '#f0c77e')
-        self.intro_texto_id = self.canvas.create_text(
-            150, 295, text='', fill=self.texto, width=720, anchor='nw',
-            font=('Consolas', 15, 'bold')
-        )
-        self.intro_corpo = corpo
-        self.intro_pos = 0
-        self.animar_texto_intro()
-        self.botao(375, 535, 274, 'PULAR / CONTINUAR', self.proxima_intro)
-        self.registrar_cliques()
-
-    def animar_texto_intro(self):
-        if self.tela != 'intro':
-            return
-        self.intro_pos = min(len(self.intro_corpo), self.intro_pos + 3)
-        self.canvas.itemconfigure(self.intro_texto_id, text=self.intro_corpo[:self.intro_pos])
-        if self.intro_pos < len(self.intro_corpo):
-            self.raiz.after(28, self.animar_texto_intro)
+        caminho = ASSETS / 'intro_missao.png'
+        if caminho.exists():
+            self.imagem('intro_missao', 0, 0)
+        else:
+            self.retangulo(0, 0, 1024, 700, '#0b101b')
+            self.retangulo(30, 30, 994, 670, '#17101a', '#bd8742')
+            self.texto_canvas(512, 100, 'O ÚLTIMO SEGREDO DA MANSÃO', 25, '#f3c77b')
+            self.texto_canvas(512, 210, '23 DE OUTUBRO DE 1987  •  23:47', 16, '#e7b96c')
+            self.texto_canvas(512, 290, 'A chuva cobre a estrada quando você encontra uma carta presa ao portão.', 13, self.texto)
+            self.texto_canvas(512, 330, 'O envelope traz apenas seu nome e o selo da família Valença.', 13, self.texto)
+            self.texto_canvas(512, 420, 'OBJETIVO: Invadir a mansão e recuperar o diário dos Valença.', 14, '#f3c77b')
+            self.botao(585, 550, 275, 'CONTINUAR', self.proxima_intro)
+            self.botao(862, 20, 145, 'PULAR [ESC]', self.proxima_intro)
+        # A arte possui botões desenhados; estas áreas invisíveis dão ação real a eles.
+        if caminho.exists():
+            self.alvos.append(((585, 548, 865, 648), self.proxima_intro))
+            self.alvos.append(((858, 14, 1015, 78), self.proxima_intro))
+            self.registrar_cliques()
 
     def proxima_intro(self):
-        if self.intro_pos < len(self.intro_corpo):
-            self.intro_pos = len(self.intro_corpo)
-            self.canvas.itemconfigure(self.intro_texto_id, text=self.intro_corpo)
-            return
-        self.intro_pagina += 1
-        if self.intro_pagina < 3:
-            self.mostrar_intro()
-        else:
-            self.som('porta')
-            self.jogar()
+        """Confirma o briefing e entra na mansão."""
+        self.som('porta')
+        self.jogar()
 
     def iniciar_ambiente_animado(self):
         """Partículas de poeira e brilho pulsante sobre a cena pixel art."""
