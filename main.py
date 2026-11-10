@@ -489,10 +489,62 @@ class Interface:
     def investigar(self, objeto):
         mensagem, tipo = self.jogo.tocar_objeto(objeto)
         if tipo == 'senha':
-            senha = simpledialog.askstring('Mecanismo de segurança', mensagem + '\n\nDigite o código:', parent=self.raiz)
-            if senha is None:
-                return
-            mensagem, tipo = self.jogo.tocar_objeto(objeto, senha)
+            self.abrir_mecanismo(objeto)
+            return
+        self.concluir_interacao(objeto, mensagem, tipo)
+
+    def abrir_mecanismo(self, objeto):
+        """Abre um painel tátil de discos numéricos ou alfabéticos."""
+        self.tela = 'mecanismo'
+        self.mecanismo_objeto = objeto
+        codigo = str(objeto.get('codigo', ''))
+        self.mecanismo_valores = [0 if ch.isdigit() else 'A' for ch in codigo]
+        self.mecanismo_tamanho = len(codigo)
+        self.desenhar_mecanismo()
+
+    def desenhar_mecanismo(self):
+        self.limpar()
+        self.imagem('capa', 0, 0)
+        self.retangulo(95, 82, 929, 618, '#171a29', self.ouro)
+        self.texto_canvas(512, 126, 'MECANISMO DE PRECISÃO', 23, self.ouro)
+        self.texto_canvas(512, 165, self.mecanismo_objeto['nome'].upper(), 14)
+        self.texto_canvas(512, 204, 'Gire cada disco. Observe marcas, sons e anotações encontrados.', 11, self.texto)
+        n = self.mecanismo_tamanho
+        espacamento = min(150, 620 // n)
+        inicio = 512 - (n - 1) * espacamento // 2
+        for i, valor in enumerate(self.mecanismo_valores):
+            x = inicio + i * espacamento
+            self.retangulo(x-42, 272, x+42, 390, '#303747', '#b88a57')
+            self.texto_canvas(x, 328, str(valor), 30, self.ouro)
+            self.botao(x-35, 230, 70, '▲', lambda k=i: self.girar_disco(k, 1))
+            self.botao(x-35, 400, 70, '▼', lambda k=i: self.girar_disco(k, -1))
+        self.texto_canvas(512, 455, 'A combinação correta libera o compartimento.', 12)
+        self.botao(300, 505, 190, 'TESTAR', self.testar_mecanismo)
+        self.botao(520, 505, 190, 'VOLTAR', self.jogar)
+        self.registrar_cliques()
+
+    def girar_disco(self, indice, sentido):
+        valor = self.mecanismo_valores[indice]
+        if isinstance(valor, int):
+            self.mecanismo_valores[indice] = (valor + sentido) % 10
+        else:
+            alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            pos = (alfabeto.index(valor) + sentido) % len(alfabeto)
+            self.mecanismo_valores[indice] = alfabeto[pos]
+        self.som('acerto')
+        self.desenhar_mecanismo()
+
+    def testar_mecanismo(self):
+        resposta = ''.join(str(v) for v in self.mecanismo_valores)
+        mensagem, tipo = self.jogo.tocar_objeto(self.mecanismo_objeto, resposta)
+        if tipo == 'erro':
+            self.som('erro')
+            messagebox.showwarning('Combinação incorreta', mensagem)
+            self.desenhar_mecanismo()
+            return
+        self.concluir_interacao(self.mecanismo_objeto, mensagem, tipo)
+
+    def concluir_interacao(self, objeto, mensagem, tipo):
         if tipo == 'erro':
             self.som('erro')
         else:
