@@ -54,8 +54,57 @@ class Motor:
     def salvar(self):
         gravar('progresso.json', self.estado)
 
+    def gerar_campanha(self):
+        ano = random.choice([1903, 1911, 1924, 1936, 1948, 1957, 1969, 1978, 1987, 1996])
+        codigo_cofre = ''.join(str(n) for n in random.sample(range(1, 10), 4))
+        codigo_armario = ''.join(str(n) for n in random.sample(range(1, 10), 3))
+        alfabeto = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
+        codigo_painel = ''.join(random.choice(alfabeto) for _ in range(3))
+        casos = [
+            ('Helena Valença', 'o mordomo', 'desvio da herança'),
+            ('Artur Valença', 'a governanta', 'um incêndio criminoso'),
+            ('Cecília Valença', 'o médico da família', 'o desaparecimento do herdeiro'),
+            ('Tomás Valença', 'o advogado', 'a falsificação do testamento')
+        ]
+        desaparecida, suspeito, crime = random.choice(casos)
+        return {
+            'ano': ano, 'codigo_cofre': codigo_cofre,
+            'codigo_armario': codigo_armario, 'codigo_painel': codigo_painel,
+            'tipos': [random.choice(['discos', 'teclado', 'sequencia']) for _ in range(3)],
+            'desaparecida': desaparecida, 'suspeito': suspeito, 'crime': crime,
+            'selo': random.choice(['corvo', 'ampulheta', 'lua partida', 'mariposa']),
+            'frase': random.choice([
+                'Quando o relógio silenciar, procure aquilo que não projeta sombra.',
+                'A casa guarda melhor seus segredos atrás do que parece comum.',
+                'Três testemunhas mentiram. A quarta deixou uma marca.',
+                'A ordem dos acontecimentos vale mais que a ordem dos números.'
+            ])
+        }
+
+    def aplicar_campanha_salva(self):
+        campanha = self.estado['campanha']
+        codigos = {'cofre': 'codigo_cofre', 'armario': 'codigo_armario', 'painel': 'codigo_painel'}
+        for sala in self.dados['salas']:
+            for obj in sala['objetos']:
+                if obj['id'] in codigos:
+                    obj['codigo'] = campanha[codigos[obj['id']]]
+                if obj['id'] == 'retrato':
+                    obj['texto'] = f"Fotografia datada de {campanha['ano']}. O selo da família é uma {campanha['selo']}."
+                elif obj['id'] == 'livro':
+                    obj['texto'] = f"Anotação: {campanha['desaparecida']} desapareceu em {campanha['ano']}. O código está escrito nas margens."
+                elif obj['id'] == 'carta':
+                    obj['texto'] = f"Bilhete: 'A sequência dos sinos foi {', '.join(campanha['codigo_armario'])}. Não ignore a ordem dos acontecimentos.'"
+                elif obj['id'] == 'vela':
+                    obj['texto'] = "Na cera endurecida há três letras: " + ' — '.join(campanha['codigo_painel']) + ". A marca da chama indica a ordem de leitura."
+                elif obj['id'] == 'diario':
+                    obj['texto'] = f"As páginas acusam {campanha['suspeito']} de encobrir {campanha['crime']}. A última anotação diz: {campanha['frase']}"
+                elif obj['id'] == 'altar':
+                    obj['texto'] = f"O selo {campanha['selo']} está entalhado no altar. A frase: '{campanha['frase']}'"
+
     def novo(self, nome):
         self.estado = estado_novo(nome, self.dados['duracao_segundos'])
+        self.estado['campanha'] = self.gerar_campanha()
+        self.aplicar_campanha_salva()
         self.salvar()
 
     def conquista(self, codigo):
