@@ -113,3 +113,8 @@ Feche a versão anterior, extraia este ZIP em uma pasta nova e execute `python m
 ## Dificuldade e narrativa
 
 A campanha oferece 20 minutos por partida, três tentativas por mecanismo, penalidade de 1 minuto por erro e custo de 1 minuto e 30 segundos por dica. O nível de alerta aumenta com erros. As pistas são ambientais e exigem relacionar informações encontradas em salas diferentes.
+
+
+## Mecanismos interativos inspirados em aventuras de caixas de enigmas
+
+Os cofres e painéis de senha agora abrem uma tela própria de mecanismo. O jogador gira discos numéricos ou alfabéticos com os botões de seta e precisa montar a combinação antes de testar. O cronômetro continua ativo enquanto o mecanismo está aberto; erros aplicam as penalidades normais do jogo. Esta implementação é uma adaptação 2D original para Tkinter, não uma reprodução dos recursos 3D ou dos controles por toque de The Room.
