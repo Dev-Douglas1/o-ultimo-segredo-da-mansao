@@ -1,0 +1,13 @@
+{
+  "jogador": "",
+  "status": "novo",
+  "sala": 0,
+  "inventario": [],
+  "vistos": [],
+  "resolvidos": [],
+  "tentativas": {},
+  "dicas": 0,
+  "tempo_restante": 1500,
+  "conquistas": [],
+  "inicio": null
+}
