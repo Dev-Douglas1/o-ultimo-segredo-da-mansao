@@ -645,7 +645,7 @@ class Interface:
                 self.resultado()
             else:
                 self.jogo.salvar()
-                if self.timer_texto is not None:
+                if self.tela == 'jogo' and self.timer_texto is not None:
                     segundos = int(self.jogo.estado['tempo_restante'])
                     self.canvas.itemconfigure(
                         self.timer_texto,
