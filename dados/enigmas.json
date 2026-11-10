@@ -1,40 +1,294 @@
 {
-  "titulo": "O Último Segredo da Mansão", "duracao_segundos": 1200,
+  "titulo": "O Último Segredo da Mansão",
+  "duracao_segundos": 1200,
   "salas": [
-    {"id": "hall", "nome": "01 · HALL DE ENTRADA", "descricao": "A chuva bate nos vitrais. Há marcas recentes de lama no tapete — alguém entrou antes de você. A porta principal está trancada por dentro.", "objetos": [
-      {"id":"retrato","nome":"Retrato da família","pos":[62,70,145,132],"texto":"No verso do retrato, escrito à mão: 'A família sorria nesta fotografia. Foi no ano em que a casa deixou de ser um lar.' A moldura tem a data 23/10/1987."},
-      {"id":"gaveta","nome":"Gaveta antiga","pos":[47,220,161,306],"texto":"Dentro da gaveta há uma pequena chave de bronze.","item":"Chave de bronze"},
-      {"id":"porta","nome":"Porta da biblioteca","pos":[319,105,434,319],"texto":"A porta tem uma fechadura enferrujada.","requer":"Chave de bronze","avanca":true}
-    ],"pista":"Investigue a gaveta à esquerda. A chave abre a porta da biblioteca."},
-    {"id":"biblioteca", "nome":"02 · BIBLIOTECA", "descricao":"O cheiro de papel queimado toma o ar. Um livro foi arrancado da estante; alguém tentou apagar um registro.","objetos":[
-      {"id":"livro","nome":"Livro marcado","pos":[42,84,152,231],"texto":"Entre as páginas, uma anotação: 'O retrato registra o ano da noite em que Helena desapareceu. O cofre foi fechado naquela mesma noite.'","item":"Página do diário"},
-      {"id":"globo","nome":"Globo terrestre","pos":[168,158,254,262],"texto":"O globo está preso na posição de 32 graus. No suporte, alguém riscou: 'Não confie no norte. Conte o que ouviu naquela noite.'"},
-      {"id":"cofre","nome":"Cofre de ferro","pos":[294,162,414,280],"texto":"O cofre pede uma senha de quatro dígitos.","codigo":"1987","sucesso":"O cofre se abre. Você encontra a chave do escritório.","item":"Chave do escritório"},
-      {"id":"porta","nome":"Porta do escritório","pos":[442,96,545,321],"texto":"A porta exige a chave guardada no cofre.","requer":"Chave do escritório","avanca":true}
-    ],"pista":"O retrato do hall mostrava um ano. Digite os quatro números no cofre."},
-    {"id":"escritorio", "nome":"03 · ESCRITÓRIO", "descricao":"A máquina ainda está morna. Uma folha foi arrancada às pressas; a tinta fresca sugere que alguém esteve aqui há poucos minutos.","objetos":[
-      {"id":"carta","nome":"Carta rasgada","pos":[61,163,182,257],"texto":"'Às 3, o primeiro sino acordou a casa. Às 2, o segundo chamou os criados. Às 4, o último abafou o grito.' Há marcas de pressão no papel.","item":"Carta rasgada"},
-      {"id":"relogio","nome":"Relógio parado","pos":[236,69,342,171],"texto":"Os ponteiros não se movem. Há três marcas sob o mostrador."},
-      {"id":"armario","nome":"Armário trancado","pos":[378,127,501,299],"texto":"Uma fechadura de três dígitos protege o armário.","codigo":"324","sucesso":"Você encontra um medalhão e uma passagem para o porão.","item":"Medalhão Valença"},
-      {"id":"passagem","nome":"Passagem oculta","pos":[515,132,602,326],"texto":"Um encaixe circular está gravado na parede.","requer":"Medalhão Valença","avanca":true}
-    ],"pista":"A carta descreve a sequência dos sinos: três, dois e quatro."},
-    {"id":"porao", "nome":"04 · PORÃO", "descricao":"A umidade cobre as pedras. Do outro lado da parede, alguém arranha a madeira. O mecanismo da escadaria parece ter sido construído para esconder algo — ou alguém.","objetos":[
-      {"id":"registro","nome":"Registro enferrujado","pos":[70,184,176,280],"texto":"No metal oxidado: 'A chama não ilumina o caminho; revela o que foi apagado.' Há fuligem recente ao redor da inscrição.","item":"Inscrição antiga"},
-      {"id":"vela","nome":"Vela apagada","pos":[227,178,295,276],"texto":"A vela apagada está fria, mas a cera ainda escorre. Na base, três letras foram gravadas de trás para frente: Z — U — L."},
-      {"id":"painel","nome":"Painel de letras","pos":[342,123,462,260],"texto":"O painel aceita uma palavra de três letras.","codigo":"LUZ","sucesso":"A grade se ergue. Uma prova escondida cai do mecanismo.","item":"Prova da conspiração"},
-      {"id":"grade","nome":"Grade de ferro","pos":[494,91,606,330],"texto":"A passagem está bloqueada até que o painel seja resolvido.","requer":"Prova da conspiração","avanca":true}
-    ],"pista":"Observe as letras na base da vela. A senha é uma palavra."},
-    {"id":"camara", "nome":"05 · CÂMARA SECRETA", "descricao":"Atrás da parede falsa há um quarto preservado. O relógio marca 23:59. O diário e as provas podem condenar alguém — mas talvez a casa não permita que você saia com ambos.","objetos":[
-      {"id":"diario","nome":"Diário escondido","pos":[67,155,198,276],"texto":"As páginas revelam que Augusto Valença falsificou a morte de Helena para tomar a herança. Os criados foram pagos para mentir. A última página tem uma impressão digital ainda úmida.","item":"Diário completo"},
-      {"id":"altar","nome":"Altar de pedra","pos":[255,153,391,285],"texto":"Uma frase foi entalhada no altar: 'Uma prova acusa. Duas provam. Três condenam.' O espaço vazio no centro parece feito para o medalhão."},
-      {"id":"saida","nome":"Portão de saída","pos":[443,79,574,325],"texto":"O portão destrava com um estalo. Lá fora, uma sirene se aproxima. Você pode fugir agora ou levar as provas até a polícia — mas precisa ter reunido o diário e a prova do porão.","final":true}
-    ],"pista":"Colete o diário. Com ele e a prova do porão, é possível revelar o segredo da família."}
+    {
+      "id": "hall",
+      "nome": "01 · HALL DE ENTRADA",
+      "descricao": "A chuva bate nos vitrais. Há marcas recentes de lama no tapete — alguém entrou antes de você. A porta principal está trancada por dentro.",
+      "objetos": [
+        {
+          "id": "retrato",
+          "nome": "Retrato da família",
+          "pos": [
+            14,
+            8,
+            150,
+            205
+          ],
+          "texto": "No verso do retrato, escrito à mão: 'A família sorria nesta fotografia. Foi no ano em que a casa deixou de ser um lar.' A moldura tem a data 23/10/1987."
+        },
+        {
+          "id": "gaveta",
+          "nome": "Gaveta antiga",
+          "pos": [
+            170,
+            265,
+            235,
+            345
+          ],
+          "texto": "Dentro da gaveta há uma pequena chave de bronze.",
+          "item": "Chave de bronze"
+        },
+        {
+          "id": "porta",
+          "nome": "Porta da biblioteca",
+          "pos": [
+            165,
+            120,
+            290,
+            310
+          ],
+          "texto": "A porta tem uma fechadura enferrujada.",
+          "requer": "Chave de bronze",
+          "avanca": true
+        }
+      ],
+      "pista": "Investigue a gaveta à esquerda. A chave abre a porta da biblioteca."
+    },
+    {
+      "id": "biblioteca",
+      "nome": "02 · BIBLIOTECA",
+      "descricao": "O cheiro de papel queimado toma o ar. Um livro foi arrancado da estante; alguém tentou apagar um registro.",
+      "objetos": [
+        {
+          "id": "livro",
+          "nome": "Livro marcado",
+          "pos": [
+            42,
+            84,
+            152,
+            231
+          ],
+          "texto": "Entre as páginas, uma anotação: 'O retrato registra o ano da noite em que Helena desapareceu. O cofre foi fechado naquela mesma noite.'",
+          "item": "Página do diário"
+        },
+        {
+          "id": "globo",
+          "nome": "Globo terrestre",
+          "pos": [
+            168,
+            158,
+            254,
+            262
+          ],
+          "texto": "O globo está preso na posição de 32 graus. No suporte, alguém riscou: 'Não confie no norte. Conte o que ouviu naquela noite.'"
+        },
+        {
+          "id": "cofre",
+          "nome": "Cofre de ferro",
+          "pos": [
+            294,
+            162,
+            414,
+            280
+          ],
+          "texto": "O cofre pede uma senha de quatro dígitos.",
+          "codigo": "1987",
+          "sucesso": "O cofre se abre. Você encontra a chave do escritório.",
+          "item": "Chave do escritório"
+        },
+        {
+          "id": "porta",
+          "nome": "Porta do escritório",
+          "pos": [
+            442,
+            96,
+            545,
+            321
+          ],
+          "texto": "A porta exige a chave guardada no cofre.",
+          "requer": "Chave do escritório",
+          "avanca": true
+        }
+      ],
+      "pista": "O retrato do hall mostrava um ano. Digite os quatro números no cofre."
+    },
+    {
+      "id": "escritorio",
+      "nome": "03 · ESCRITÓRIO",
+      "descricao": "A máquina ainda está morna. Uma folha foi arrancada às pressas; a tinta fresca sugere que alguém esteve aqui há poucos minutos.",
+      "objetos": [
+        {
+          "id": "carta",
+          "nome": "Carta rasgada",
+          "pos": [
+            61,
+            163,
+            182,
+            257
+          ],
+          "texto": "'Às 3, o primeiro sino acordou a casa. Às 2, o segundo chamou os criados. Às 4, o último abafou o grito.' Há marcas de pressão no papel.",
+          "item": "Carta rasgada"
+        },
+        {
+          "id": "relogio",
+          "nome": "Relógio parado",
+          "pos": [
+            236,
+            69,
+            342,
+            171
+          ],
+          "texto": "Os ponteiros não se movem. Há três marcas sob o mostrador."
+        },
+        {
+          "id": "armario",
+          "nome": "Armário trancado",
+          "pos": [
+            378,
+            127,
+            501,
+            299
+          ],
+          "texto": "Uma fechadura de três dígitos protege o armário.",
+          "codigo": "324",
+          "sucesso": "Você encontra um medalhão e uma passagem para o porão.",
+          "item": "Medalhão Valença"
+        },
+        {
+          "id": "passagem",
+          "nome": "Passagem oculta",
+          "pos": [
+            515,
+            132,
+            602,
+            326
+          ],
+          "texto": "Um encaixe circular está gravado na parede.",
+          "requer": "Medalhão Valença",
+          "avanca": true
+        }
+      ],
+      "pista": "A carta descreve a sequência dos sinos: três, dois e quatro."
+    },
+    {
+      "id": "porao",
+      "nome": "04 · PORÃO",
+      "descricao": "A umidade cobre as pedras. Do outro lado da parede, alguém arranha a madeira. O mecanismo da escadaria parece ter sido construído para esconder algo — ou alguém.",
+      "objetos": [
+        {
+          "id": "registro",
+          "nome": "Registro enferrujado",
+          "pos": [
+            70,
+            184,
+            176,
+            280
+          ],
+          "texto": "No metal oxidado: 'A chama não ilumina o caminho; revela o que foi apagado.' Há fuligem recente ao redor da inscrição.",
+          "item": "Inscrição antiga"
+        },
+        {
+          "id": "vela",
+          "nome": "Vela apagada",
+          "pos": [
+            227,
+            178,
+            295,
+            276
+          ],
+          "texto": "A vela apagada está fria, mas a cera ainda escorre. Na base, três letras foram gravadas de trás para frente: Z — U — L."
+        },
+        {
+          "id": "painel",
+          "nome": "Painel de letras",
+          "pos": [
+            342,
+            123,
+            462,
+            260
+          ],
+          "texto": "O painel aceita uma palavra de três letras.",
+          "codigo": "LUZ",
+          "sucesso": "A grade se ergue. Uma prova escondida cai do mecanismo.",
+          "item": "Prova da conspiração"
+        },
+        {
+          "id": "grade",
+          "nome": "Grade de ferro",
+          "pos": [
+            494,
+            91,
+            606,
+            330
+          ],
+          "texto": "A passagem está bloqueada até que o painel seja resolvido.",
+          "requer": "Prova da conspiração",
+          "avanca": true
+        }
+      ],
+      "pista": "Observe as letras na base da vela. A senha é uma palavra."
+    },
+    {
+      "id": "camara",
+      "nome": "05 · CÂMARA SECRETA",
+      "descricao": "Atrás da parede falsa há um quarto preservado. O relógio marca 23:59. O diário e as provas podem condenar alguém — mas talvez a casa não permita que você saia com ambos.",
+      "objetos": [
+        {
+          "id": "diario",
+          "nome": "Diário escondido",
+          "pos": [
+            67,
+            155,
+            198,
+            276
+          ],
+          "texto": "As páginas revelam que Augusto Valença falsificou a morte de Helena para tomar a herança. Os criados foram pagos para mentir. A última página tem uma impressão digital ainda úmida.",
+          "item": "Diário completo"
+        },
+        {
+          "id": "altar",
+          "nome": "Altar de pedra",
+          "pos": [
+            255,
+            153,
+            391,
+            285
+          ],
+          "texto": "Uma frase foi entalhada no altar: 'Uma prova acusa. Duas provam. Três condenam.' O espaço vazio no centro parece feito para o medalhão."
+        },
+        {
+          "id": "saida",
+          "nome": "Portão de saída",
+          "pos": [
+            443,
+            79,
+            574,
+            325
+          ],
+          "texto": "O portão destrava com um estalo. Lá fora, uma sirene se aproxima. Você pode fugir agora ou levar as provas até a polícia — mas precisa ter reunido o diário e a prova do porão.",
+          "final": true
+        }
+      ],
+      "pista": "Colete o diário. Com ele e a prova do porão, é possível revelar o segredo da família."
+    }
   ],
   "conquistas": [
-    {"id":"primeira_pista","nome":"Olhos atentos","descricao":"Investigue seu primeiro objeto."},
-    {"id":"colecionador","nome":"Colecionador","descricao":"Encontre quatro itens."},
-    {"id":"sem_pistas","nome":"Detetive nato","descricao":"Conclua sem usar dicas."},
-    {"id":"verdade","nome":"A verdade prevalece","descricao":"Revele a conspiração."},
-    {"id":"sobrevivente","nome":"Sobrevivente","descricao":"Escape da mansão."}
+    {
+      "id": "primeira_pista",
+      "nome": "Olhos atentos",
+      "descricao": "Investigue seu primeiro objeto."
+    },
+    {
+      "id": "colecionador",
+      "nome": "Colecionador",
+      "descricao": "Encontre quatro itens."
+    },
+    {
+      "id": "sem_pistas",
+      "nome": "Detetive nato",
+      "descricao": "Conclua sem usar dicas."
+    },
+    {
+      "id": "verdade",
+      "nome": "A verdade prevalece",
+      "descricao": "Revele a conspiração."
+    },
+    {
+      "id": "sobrevivente",
+      "nome": "Sobrevivente",
+      "descricao": "Escape da mansão."
+    }
   ]
 }
