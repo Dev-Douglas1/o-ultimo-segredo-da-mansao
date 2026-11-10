@@ -564,7 +564,20 @@ class Interface:
         self.retangulo(95, 82, 929, 618, '#171a29', self.ouro)
         self.texto_canvas(512, 126, 'MECANISMO DE PRECISÃO', 23, self.ouro)
         self.texto_canvas(512, 165, self.mecanismo_objeto['nome'].upper(), 14)
-        self.texto_canvas(512, 204, 'Gire cada disco. Observe marcas, sons e anotações encontrados.', 11, self.texto)
+        instrucao = {'discos': 'Gire os discos até formar a combinação.', 'teclado': 'Selecione os caracteres na ordem das pistas.', 'sequencia': 'Repita a sequência encontrada nas pistas.'}[self.mecanismo_tipo]
+        self.texto_canvas(512, 204, instrucao, 11, self.texto)
+        if self.mecanismo_tipo in ('teclado', 'sequencia'):
+            self.texto_canvas(512, 247, self.mecanismo_sequencia or '·  ·  ·  ·', 22, self.ouro)
+            chars = '0123456789' if self.mecanismo_tipo == 'teclado' else 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            for i, char in enumerate(chars):
+                linha, coluna = divmod(i, 10)
+                x, y = 222 + coluna * 64, 305 + linha * 57
+                if y < 465:
+                    self.botao(x, y, 54, char, lambda ch=char: self.adicionar_caractere(ch))
+            self.botao(300, 505, 190, 'APAGAR', self.apagar_sequencia)
+            self.botao(520, 505, 190, 'TESTAR', self.testar_mecanismo)
+            self.registrar_cliques()
+            return
         n = self.mecanismo_tamanho
         espacamento = min(150, 620 // n)
         inicio = 512 - (n - 1) * espacamento // 2
