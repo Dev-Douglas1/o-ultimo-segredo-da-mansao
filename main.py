@@ -571,7 +571,7 @@ class Interface:
         self.texto_canvas(512, 204, instrucao, 11, self.texto)
         if self.mecanismo_tipo in ('teclado', 'sequencia'):
             self.texto_canvas(512, 247, self.mecanismo_sequencia or '·  ·  ·  ·', 22, self.ouro)
-            chars = '0123456789' if self.mecanismo_tipo == 'teclado' else 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            chars = '0123456789' if self.mecanismo_objeto.get('codigo', '').isdigit() else 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             for i, char in enumerate(chars):
                 linha, coluna = divmod(i, 10)
                 x, y = 222 + coluna * 64, 305 + linha * 57
