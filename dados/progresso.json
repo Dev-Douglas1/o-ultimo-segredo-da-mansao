@@ -1,6 +1,6 @@
 {
-  "jogador": "",
-  "status": "novo",
+  "jogador": "d",
+  "status": "jogando",
   "sala": 0,
   "inventario": [],
   "vistos": [],
@@ -9,5 +9,5 @@
   "dicas": 0,
   "tempo_restante": 1500,
   "conquistas": [],
-  "inicio": null
+  "inicio": "2026-11-10T10:56:43"
 }

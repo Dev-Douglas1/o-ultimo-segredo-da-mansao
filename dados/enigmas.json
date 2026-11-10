@@ -1,31 +1,30 @@
 {
-  "titulo": "O Último Segredo da Mansão",
-  "duracao_segundos": 1500,
+  "titulo": "O Último Segredo da Mansão", "duracao_segundos": 1500,
   "salas": [
-    {"id":"hall","nome":"01 · HALL DE ENTRADA","descricao":"O vento bate nas janelas. A porta principal foi trancada por dentro.","objetos":[
+    {"id": "hall", "nome": "01 · HALL DE ENTRADA", "descricao": "O vento bate nas janelas. A porta principal foi trancada por dentro.", "objetos": [
       {"id":"retrato","nome":"Retrato da família","pos":[62,70,145,132],"texto":"Uma placa sob o retrato: 'O ano em que tudo começou: 1987'."},
       {"id":"gaveta","nome":"Gaveta antiga","pos":[47,220,161,306],"texto":"Dentro da gaveta há uma pequena chave de bronze.","item":"Chave de bronze"},
       {"id":"porta","nome":"Porta da biblioteca","pos":[319,105,434,319],"texto":"A porta tem uma fechadura enferrujada.","requer":"Chave de bronze","avanca":true}
     ],"pista":"Investigue a gaveta à esquerda. A chave abre a porta da biblioteca."},
-    {"id":"biblioteca","nome":"02 · BIBLIOTECA","descricao":"Livros empoeirados escondem uma combinação numérica.","objetos":[
+    {"id":"biblioteca", "nome":"02 · BIBLIOTECA", "descricao":"Livros empoeirados escondem uma combinação numérica.","objetos":[
       {"id":"livro","nome":"Livro marcado","pos":[42,84,152,231],"texto":"Na lombada do livro: 'As quatro cifras estão no retrato do hall: 1987'.","item":"Página do diário"},
       {"id":"globo","nome":"Globo terrestre","pos":[168,158,254,262],"texto":"Uma etiqueta: 'O passado abre o presente'."},
       {"id":"cofre","nome":"Cofre de ferro","pos":[294,162,414,280],"texto":"O cofre pede uma senha de quatro dígitos.","codigo":"1987","sucesso":"O cofre se abre. Você encontra a chave do escritório.","item":"Chave do escritório"},
       {"id":"porta","nome":"Porta do escritório","pos":[442,96,545,321],"texto":"A porta exige a chave guardada no cofre.","requer":"Chave do escritório","avanca":true}
     ],"pista":"O retrato do hall mostrava um ano. Digite os quatro números no cofre."},
-    {"id":"escritorio","nome":"03 · ESCRITÓRIO","descricao":"Uma máquina de escrever parou no meio de uma confissão.","objetos":[
+    {"id":"escritorio", "nome":"03 · ESCRITÓRIO", "descricao":"Uma máquina de escrever parou no meio de uma confissão.","objetos":[
       {"id":"carta","nome":"Carta rasgada","pos":[61,163,182,257],"texto":"'Os sinos tocaram três vezes. Depois, duas. Por fim, quatro.'","item":"Carta rasgada"},
       {"id":"relogio","nome":"Relógio parado","pos":[236,69,342,171],"texto":"Os ponteiros não se movem. Há três marcas sob o mostrador."},
       {"id":"armario","nome":"Armário trancado","pos":[378,127,501,299],"texto":"Uma fechadura de três dígitos protege o armário.","codigo":"324","sucesso":"Você encontra um medalhão e uma passagem para o porão.","item":"Medalhão Valença"},
       {"id":"passagem","nome":"Passagem oculta","pos":[515,132,602,326],"texto":"Um encaixe circular está gravado na parede.","requer":"Medalhão Valença","avanca":true}
     ],"pista":"A carta descreve a sequência dos sinos: três, dois e quatro."},
-    {"id":"porao","nome":"04 · PORÃO","descricao":"A umidade cobre as pedras. Um mecanismo bloqueia a escadaria.","objetos":[
+    {"id":"porao", "nome":"04 · PORÃO", "descricao":"A umidade cobre as pedras. Um mecanismo bloqueia a escadaria.","objetos":[
       {"id":"registro","nome":"Registro enferrujado","pos":[70,184,176,280],"texto":"A inscrição diz: 'A verdade está sob a chama'.","item":"Inscrição antiga"},
       {"id":"vela","nome":"Vela apagada","pos":[227,178,295,276],"texto":"A base da vela tem letras gravadas: L U Z."},
       {"id":"painel","nome":"Painel de letras","pos":[342,123,462,260],"texto":"O painel aceita uma palavra de três letras.","codigo":"LUZ","sucesso":"A grade se ergue. Uma prova escondida cai do mecanismo.","item":"Prova da conspiração"},
       {"id":"grade","nome":"Grade de ferro","pos":[494,91,606,330],"texto":"A passagem está bloqueada até que o painel seja resolvido.","requer":"Prova da conspiração","avanca":true}
     ],"pista":"Observe as letras na base da vela. A senha é uma palavra."},
-    {"id":"camara","nome":"05 · CÂMARA SECRETA","descricao":"Você encontrou o coração da mansão. Uma escolha decidirá seu destino.","objetos":[
+    {"id":"camara", "nome":"05 · CÂMARA SECRETA", "descricao":"Você encontrou o coração da mansão. Uma escolha decidirá seu destino.","objetos":[
       {"id":"diario","nome":"Diário escondido","pos":[67,155,198,276],"texto":"O diário revela que a família foi mantida prisioneira por um herdeiro ganancioso.","item":"Diário completo"},
       {"id":"altar","nome":"Altar de pedra","pos":[255,153,391,285],"texto":"Um bilhete diz: 'A verdade só aparece quando as provas se unem'."},
       {"id":"saida","nome":"Portão de saída","pos":[443,79,574,325],"texto":"O portão se abre. Você pode fugir ou revelar a verdade.","final":true}
