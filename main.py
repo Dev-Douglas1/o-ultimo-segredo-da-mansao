@@ -516,6 +516,7 @@ class Interface:
         self.retangulo(0, 0, 1024, 64, '#151724')
         self.texto_canvas(20, 20, sala['nome'], 16, self.ouro, ancora='nw')
         self.texto_canvas(512, 20, f"ALERTA {self.jogo.estado.get('alerta', 0)}", 12, '#d88b82')
+        self.botao(340, 9, 120, 'LENTE [F2]', self.usar_lente)
         segundos = max(0, self.jogo.estado['tempo_restante'])
         self.timer_texto = self.texto_canvas(
             1000, 21, f'TEMPO {segundos//60:02}:{segundos%60:02}', 15,
@@ -526,7 +527,7 @@ class Interface:
         self.texto_canvas(30, 581, 'CLIQUE NOS OBJETOS ILUMINADOS PARA INVESTIGAR', 11, self.ouro, ancora='nw')
         self.botao(28, 628, 180, 'INVENTÁRIO [I]', self.inventario)
         self.botao(222, 628, 180, 'PISTA [F1]', self.mostrar_dica)
-        self.botao(222, 578, 180, 'LENTE [F2]', self.usar_lente)
+
         self.botao(416, 628, 180, 'SALVAR', self.salvar)
         self.botao(610, 628, 180, 'CONQUISTAS', self.conquistas)
         self.botao(804, 628, 190, 'MENU [ESC]', self.menu)
