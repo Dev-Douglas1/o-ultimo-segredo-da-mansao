@@ -35,7 +35,7 @@ def gravar(nome, dados):
 def estado_novo(nome, segundos):
     return dict(jogador=nome, status='jogando', sala=0, inventario=[], vistos=[],
                 resolvidos=[], tentativas={}, dicas=0, tempo_restante=segundos,
-                conquistas=[], inicio=datetime.now().isoformat(timespec='seconds'))
+                conquistas=[], alerta=0, inicio=datetime.now().isoformat(timespec='seconds'))
 
 
 class Motor:
@@ -76,11 +76,14 @@ class Motor:
                 return (texto, 'senha')
             if str(resposta).strip().upper() != objeto['codigo'].upper():
                 s['tentativas'][chave] = s['tentativas'].get(chave, 0) + 1
+                s['alerta'] = s.get('alerta', 0) + 1
+                s['tempo_restante'] = max(0, s.get('tempo_restante', 0) - 60)
+                restantes = 3 - s['tentativas'][chave]
                 self.salvar()
-                if s['tentativas'][chave] >= 4:
+                if s['tentativas'][chave] >= 3:
                     self.finalizar('Capturado pela mansão')
-                    return ('Quatro códigos incorretos! A mansão bloqueou todas as saídas.', 'fim')
-                return (f"Código incorreto. Tentativas: {s['tentativas'][chave]}/4", 'erro')
+                    return ('O mecanismo dispara um alarme. Passos ecoam no andar de cima. A mansão percebeu sua presença: você foi capturado.', 'fim')
+                return (f"O código está errado. Um ruído percorre os canos. Você perdeu 1 minuto e restam {restantes} tentativa(s).", 'erro')
             s['resolvidos'].append(chave)
             texto = objeto.get('sucesso', 'Mecanismo aberto!')
         if objeto.get('requer') and objeto['requer'] not in s['inventario']:
@@ -104,8 +107,9 @@ class Motor:
 
     def dica(self):
         self.estado['dicas'] += 1
+        self.estado['tempo_restante'] = max(0, self.estado.get('tempo_restante', 0) - 90)
         self.salvar()
-        return self.sala['pista']
+        return 'Você força a memória a se concentrar. O relógio avança 1 minuto e 30 segundos.\n\n' + self.sala['pista']
 
     def finalizar(self, resultado):
         if self.estado['status'] != 'jogando':
@@ -122,6 +126,7 @@ class Motor:
         registro = dict(jogador=self.estado['jogador'], resultado=resultado,
                         salas_visitadas=self.estado['sala'] + 1,
                         itens=len(self.estado['inventario']), dicas=self.estado['dicas'],
+                        alerta=self.estado.get('alerta', 0),
                         tempo_restante=self.estado['tempo_restante'],
                         conquistas=list(self.estado['conquistas']),
                         inicio=self.estado['inicio'], fim=datetime.now().isoformat(timespec='seconds'))
@@ -457,6 +462,7 @@ class Interface:
         self.imagem(sala['id'], 0, 0)
         self.retangulo(0, 0, 1024, 64, '#151724')
         self.texto_canvas(20, 20, sala['nome'], 16, self.ouro, ancora='nw')
+        self.texto_canvas(512, 20, f"ALERTA {self.jogo.estado.get('alerta', 0)}", 12, '#d88b82')
         segundos = max(0, self.jogo.estado['tempo_restante'])
         self.timer_texto = self.texto_canvas(
             1000, 21, f'TEMPO {segundos//60:02}:{segundos%60:02}', 15,
@@ -568,7 +574,8 @@ class Interface:
             'Colete itens para abrir portas e mecanismos.',
             'Observe cartas, retratos e inscrições para descobrir senhas.',
             'F1: pedir pista   |   I: inventário   |   ESC: menu',
-            'Você tem 25 minutos e quatro tentativas por código.',
+            'Você tem 20 minutos e apenas três tentativas por código.',
+            'Erros custam 1 minuto; pedir uma dica custa 1 minuto e 30 segundos.',
             'O progresso é salvo em JSON e pode ser recuperado depois.',
             'Na última sala, escolha fugir ou revelar a verdade.',
             'Modo didático no terminal: python main.py --terminal'
