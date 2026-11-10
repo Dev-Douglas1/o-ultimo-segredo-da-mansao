@@ -513,9 +513,24 @@ class Interface:
             if x1 <= evento.x <= x2 and y1 <= evento.y <= y2:
                 alvo = objeto['id']
                 break
+        self.canvas.delete('hover_fx')
         if alvo != self.hover_alvo:
             self.hover_alvo = alvo
             self.canvas.config(cursor='hand2' if alvo else 'arrow')
+        if alvo:
+            for registro in reversed(self.alvos):
+                if len(registro) != 3 or registro[2]['id'] != alvo:
+                    continue
+                caixa = registro[0]
+                x1, y1, x2, y2 = caixa
+                self.canvas.create_rectangle(x1, y1, x2, y2, outline='#f4c77b',
+                                             width=2, dash=(5, 3), tags='hover_fx')
+                self.canvas.create_rectangle(x1+4, y1+4, x2-4, y2-4,
+                                             outline='#53d7ce', width=1, tags='hover_fx')
+                self.canvas.create_text((x1+x2)//2, max(75,y1-12),
+                                        text='✦ EXAMINAR', fill='#f4c77b',
+                                        font=('Consolas', 9, 'bold'), tags='hover_fx')
+                break
 
     def jogar(self):
         if self.jogo.estado.get('status') != 'jogando':
@@ -553,6 +568,9 @@ class Interface:
             a,b,c,d = 32+int(x1*1.5), 72+int(y1*1.25), 32+int(x2*1.5), 72+int(y2*1.25)
             # A área clicável fica invisível; o jogador só vê a arte do cenário.
             self.alvos.append(((a,b,c,d), lambda o=objeto: self.investigar(o), objeto))
+            # Pequeno marcador de investigação; não cobre a arte do cenário.
+            self.canvas.create_text(c-8, b+8, text='✦', fill='#f0bd69',
+                                    font=('Consolas', 13, 'bold'))
         self.registrar_cliques()
         self.canvas.bind('<Motion>', self.atualizar_hover)
         self.iniciar_ambiente_animado()
