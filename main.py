@@ -430,13 +430,7 @@ class Interface:
                 int(p['x']), int(p['y']), int(p['x']) + 2, int(p['y']) + 2,
                 fill=brilho, outline=brilho, tags='ambiente_animado'
             )
-        # Oscilação discreta da luz: a tela recebe um véu alternado.
-        self.pulso = getattr(self, 'pulso', 0) + 1
-        if self.pulso % 8 == 0:
-            self.canvas.create_rectangle(
-                0, 64, 1024, 528, fill='#fff0c2',
-                stipple='gray25', outline='', tags='ambiente_animado'
-            )
+        # Mantém a iluminação estável; apenas a poeira se movimenta.
         self.raiz.after(90, self.animar_ambiente)
 
     def atualizar_hover(self, evento):
