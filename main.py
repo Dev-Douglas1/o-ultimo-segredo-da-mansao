@@ -46,6 +46,8 @@ class Motor:
             raise ValueError('enigmas.json deve conter ao menos cinco salas.')
         self.estado = ler('progresso.json', estado_novo('', 1500))
         self.historico = ler('historico.json', {'partidas': []})
+        if self.estado.get('status') == 'jogando' and self.estado.get('campanha'):
+            self.aplicar_campanha_salva()
 
     @property
     def sala(self):
