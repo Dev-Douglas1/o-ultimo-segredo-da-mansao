@@ -10,7 +10,6 @@ import time
 import tkinter as tk
 from datetime import datetime
 from pathlib import Path
-from tkinter import messagebox, simpledialog
 
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / 'dados'
@@ -360,6 +359,98 @@ class Interface:
             self.imagens.append(foto)
             self.canvas.create_image(x, y, image=foto, anchor='nw')
 
+    def notificacao(self, titulo, mensagem, tipo='info', ao_fechar=None, botoes=None):
+        """Modal desenhado no canvas: mantém o jogador dentro da interface do jogo."""
+        self.tela_anterior_notificacao = self.tela
+        self.tela = 'notificacao'
+        self.alvos = []
+        self.canvas.delete('modal')
+        cores = {
+            'info': ('#d9b36d', '✦ REGISTRO DA MANSÃO'),
+            'pista': ('#75cfc5', '⌕ PISTA DESCOBERTA'),
+            'aviso': ('#e5a45e', '! ATENÇÃO'),
+            'erro': ('#e27b72', '× FALHA'),
+            'sucesso': ('#8fc6a0', '✓ REGISTRO SALVO'),
+            'decisao': ('#d9b36d', '◆ DECISÃO FINAL')
+        }
+        acento, etiqueta = cores.get(tipo, cores['info'])
+        self.canvas.create_rectangle(0, 0, self.W, self.H, fill='#050711',
+                                     stipple='gray50', outline='', tags='modal')
+        self.canvas.create_rectangle(174, 172, 850, 548, fill='#080d18',
+                                     outline='#684b37', width=5, tags='modal')
+        self.canvas.create_rectangle(183, 181, 841, 539, outline=acento,
+                                     width=2, tags='modal')
+        self.canvas.create_rectangle(202, 202, 822, 206, fill=acento,
+                                     outline='', tags='modal')
+        self.canvas.create_text(512, 230, text=etiqueta, fill=acento,
+                                font=('Consolas', 10, 'bold'), tags='modal')
+        self.canvas.create_text(512, 274, text=titulo.upper(), fill='#f2d8a5',
+                                font=('Consolas', 19, 'bold'), width=570,
+                                justify='center', tags='modal')
+        self.canvas.create_text(512, 350, text=mensagem, fill='#e7e0d3',
+                                font=('Consolas', 12, 'bold'), width=560,
+                                justify='center', tags='modal')
+        self.canvas.create_rectangle(202, 480, 822, 482, fill='#49392e',
+                                     outline='', tags='modal')
+        opcoes = botoes or [('CONTINUAR', ao_fechar or self.fechar_notificacao)]
+        if len(opcoes) == 1:
+            x = 387
+            self.botao_modal(x, 495, 250, opcoes[0][0], opcoes[0][1], acento)
+        else:
+            larg = 230
+            self.botao_modal(275, 495, larg, opcoes[0][0], opcoes[0][1], acento)
+            self.botao_modal(519, 495, larg, opcoes[1][0], opcoes[1][1], acento)
+        self.canvas.tag_raise('modal')
+        self.registrar_cliques()
+        self.raiz.bind('<Escape>', lambda e: (ao_fechar or self.fechar_notificacao)())
+
+    def botao_modal(self, x, y, largura, titulo, comando, acento):
+        self.canvas.create_rectangle(x+3, y+4, x+largura+3, y+46,
+                                     fill='#03050b', outline='', tags='modal')
+        self.canvas.create_rectangle(x, y, x+largura, y+42,
+                                     fill='#151b29', outline=acento, width=2, tags='modal')
+        self.canvas.create_text(x+largura/2, y+21, text=titulo, fill='#f4d49a',
+                                font=('Consolas', 10, 'bold'), tags='modal')
+        self.alvos.append(((x, y, x+largura, y+42), comando))
+
+    def fechar_notificacao(self):
+        self.jogar()
+
+    def pedir_nome(self):
+        self.tela = 'nome'
+        self.alvos = []
+        self.canvas.delete('modal')
+        self.canvas.create_rectangle(0, 0, self.W, self.H, fill='#050711',
+                                     stipple='gray50', outline='', tags='modal')
+        self.canvas.create_rectangle(230, 210, 794, 490, fill='#080d18',
+                                     outline='#bd8742', width=4, tags='modal')
+        self.canvas.create_rectangle(240, 220, 784, 480, outline='#d9b36d',
+                                     width=2, tags='modal')
+        self.canvas.create_text(512, 260, text='IDENTIFICAÇÃO DO INVESTIGADOR',
+                                fill='#d9b36d', font=('Consolas', 13, 'bold'), tags='modal')
+        self.nome_entry = tk.Entry(self.raiz, font=('Consolas', 14), justify='center',
+                                   bg='#172131', fg='#f3e6ce', insertbackground='#f3e6ce',
+                                   relief='flat')
+        self.nome_entry_window = self.canvas.create_window(512, 335, window=self.nome_entry,
+                                                           width=360, height=38, tags='modal')
+        self.botao_modal(387, 410, 250, 'INICIAR INVESTIGAÇÃO', self.confirmar_nome, '#d9b36d')
+        self.canvas.tag_raise('modal')
+        self.nome_entry.focus_set()
+        self.registrar_cliques()
+        self.raiz.bind('<Return>', lambda e: self.confirmar_nome())
+        self.raiz.bind('<Escape>', lambda e: self.menu())
+
+    def confirmar_nome(self):
+        nome = self.nome_entry.get().strip()
+        if not nome:
+            self.notificacao('Nome necessário', 'Informe como deseja ser identificado no arquivo da investigação.', 'aviso',
+                             ao_fechar=self.pedir_nome)
+            return
+        self.nome_entry.destroy()
+        self.jogo.novo(nome[:25])
+        self.intro_pagina = 0
+        self.mostrar_intro()
+
     def menu(self):
         self.tela = 'menu'
         self.musica()
@@ -409,13 +500,10 @@ class Interface:
 
     def nova(self):
         if self.jogo.estado.get('status') == 'jogando':
-            if not messagebox.askyesno('Nova partida', 'Substituir o progresso atual?'):
-                return
-        nome = simpledialog.askstring('Jogador', 'Qual é o seu nome?', parent=self.raiz)
-        if nome and nome.strip():
-            self.jogo.novo(nome.strip()[:25])
-            self.intro_pagina = 0
-            self.mostrar_intro()
+            self.notificacao('Substituir investigação?', 'Uma nova investigação substituirá o progresso atual desta partida. Deseja continuar?', 'aviso',
+                botoes=[('CANCELAR', self.menu), ('NOVA PARTIDA', self.pedir_nome)])
+            return
+        self.pedir_nome()
 
     def mostrar_intro(self):
         """Briefing visual da missão, com ações clicáveis sobre a arte."""
@@ -638,8 +726,8 @@ class Interface:
         mensagem, tipo = self.jogo.tocar_objeto(self.mecanismo_objeto, resposta)
         if tipo == 'erro':
             self.som('erro')
-            messagebox.showwarning('Combinação incorreta', mensagem)
-            self.desenhar_mecanismo()
+            self.notificacao('Combinação incorreta', mensagem, 'erro',
+                             ao_fechar=self.desenhar_mecanismo)
             return
         self.concluir_interacao(self.mecanismo_objeto, mensagem, tipo)
 
@@ -652,21 +740,24 @@ class Interface:
             self.escolha_final()
             return
         if tipo == 'fim':
-            messagebox.showerror('Fim de jogo', mensagem)
-            self.resultado()
+            self.notificacao('Fim da investigação', mensagem, 'erro', ao_fechar=self.resultado)
             return
-        messagebox.showinfo(objeto['nome'], mensagem)
         if tipo == 'avancar':
             self.som('porta')
-        self.jogar()
+        self.notificacao(objeto['nome'], mensagem, 'sucesso' if tipo == 'avancar' else 'info',
+                         ao_fechar=self.jogar)
 
     def escolha_final(self):
-        revelar = messagebox.askyesno('A decisão final',
-            'O portão está aberto.\n\nSIM: revelar a conspiração.\nNÃO: fugir imediatamente.')
+        self.notificacao('O último segredo', 'O portão está aberto. Você pode revelar a conspiração ou fugir imediatamente. A decisão definirá o desfecho desta história.',
+            'decisao', botoes=[
+                ('REVELAR A VERDADE', lambda: self.confirmar_decisao(True)),
+                ('FUGIR DA MANSÃO', lambda: self.confirmar_decisao(False))
+            ])
+
+    def confirmar_decisao(self, revelar):
         aviso = self.jogo.escolha_final(revelar)
         if aviso:
-            messagebox.showwarning('Evidências insuficientes', aviso)
-            self.jogar()
+            self.notificacao('Evidências insuficientes', aviso, 'aviso', ao_fechar=self.jogar)
         else:
             self.resultado()
 
@@ -711,18 +802,18 @@ class Interface:
         self.jogo.estado['lente_usos'] = self.jogo.estado.get('lente_usos', 0) + 1
         self.jogo.salvar()
         self.som('acerto')
-        messagebox.showinfo('Lente de investigação', pistas.get(sala, 'A lente revela marcas escondidas na superfície.'))
-        self.jogar()
+        self.notificacao('Lente de investigação', pistas.get(sala, 'A lente revela marcas escondidas na superfície.'),
+                         'pista', ao_fechar=self.jogar)
 
     def mostrar_dica(self):
         dica = self.jogo.dica()
         self.som('acerto')
-        messagebox.showinfo('Pista encontrada', dica)
-        self.jogar()
+        self.notificacao('Pista encontrada', dica, 'pista', ao_fechar=self.jogar)
 
     def salvar(self):
         self.jogo.salvar()
-        messagebox.showinfo('Salvo', 'Progresso salvo em dados/progresso.json.')
+        self.notificacao('Progresso salvo', 'Sua investigação foi registrada no arquivo da mansão.', 'sucesso',
+                         ao_fechar=self.jogar)
 
     def historico(self):
         registros = self.jogo.historico.get('partidas', [])
