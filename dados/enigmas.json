@@ -11,10 +11,10 @@
           "id": "retrato",
           "nome": "Retrato da família",
           "pos": [
-            14,
-            8,
-            150,
-            205
+            30,
+            31,
+            225,
+            215
           ],
           "texto": "No verso do retrato, escrito à mão: 'A família sorria nesta fotografia. Foi no ano em que a casa deixou de ser um lar.' A moldura tem a data 23/10/1987."
         },
@@ -22,10 +22,10 @@
           "id": "gaveta",
           "nome": "Gaveta antiga",
           "pos": [
-            170,
-            265,
-            235,
-            345
+            41,
+            234,
+            226,
+            320
           ],
           "texto": "Dentro da gaveta há uma pequena chave de bronze.",
           "item": "Chave de bronze"
@@ -34,10 +34,10 @@
           "id": "porta",
           "nome": "Porta da biblioteca",
           "pos": [
-            165,
-            120,
-            290,
-            310
+            334,
+            55,
+            461,
+            293
           ],
           "texto": "A porta tem uma fechadura enferrujada.",
           "requer": "Chave de bronze",
@@ -55,10 +55,10 @@
           "id": "livro",
           "nome": "Livro marcado",
           "pos": [
-            42,
-            84,
-            152,
-            231
+            22,
+            35,
+            213,
+            252
           ],
           "texto": "Entre as páginas, uma anotação: 'O retrato registra o ano da noite em que Helena desapareceu. O cofre foi fechado naquela mesma noite.'",
           "item": "Página do diário"
@@ -67,10 +67,10 @@
           "id": "globo",
           "nome": "Globo terrestre",
           "pos": [
-            168,
-            158,
-            254,
-            262
+            253,
+            82,
+            353,
+            206
           ],
           "texto": "O globo está preso na posição de 32 graus. No suporte, alguém riscou: 'Não confie no norte. Conte o que ouviu naquela noite.'"
         },
@@ -78,10 +78,10 @@
           "id": "cofre",
           "nome": "Cofre de ferro",
           "pos": [
-            294,
-            162,
-            414,
-            280
+            356,
+            140,
+            438,
+            269
           ],
           "texto": "O cofre pede uma senha de quatro dígitos.",
           "codigo": "1987",
@@ -92,10 +92,10 @@
           "id": "porta",
           "nome": "Porta do escritório",
           "pos": [
-            442,
-            96,
-            545,
-            321
+            519,
+            43,
+            613,
+            335
           ],
           "texto": "A porta exige a chave guardada no cofre.",
           "requer": "Chave do escritório",
@@ -113,10 +113,10 @@
           "id": "carta",
           "nome": "Carta rasgada",
           "pos": [
-            61,
-            163,
-            182,
-            257
+            34,
+            168,
+            245,
+            304
           ],
           "texto": "'Às 3, o primeiro sino acordou a casa. Às 2, o segundo chamou os criados. Às 4, o último abafou o grito.' Há marcas de pressão no papel.",
           "item": "Carta rasgada"
@@ -125,9 +125,9 @@
           "id": "relogio",
           "nome": "Relógio parado",
           "pos": [
-            236,
-            69,
-            342,
+            262,
+            32,
+            375,
             171
           ],
           "texto": "Os ponteiros não se movem. Há três marcas sob o mostrador."
@@ -136,10 +136,10 @@
           "id": "armario",
           "nome": "Armário trancado",
           "pos": [
-            378,
-            127,
-            501,
-            299
+            412,
+            90,
+            520,
+            313
           ],
           "texto": "Uma fechadura de três dígitos protege o armário.",
           "codigo": "324",
@@ -150,10 +150,10 @@
           "id": "passagem",
           "nome": "Passagem oculta",
           "pos": [
-            515,
-            132,
-            602,
-            326
+            540,
+            51,
+            625,
+            327
           ],
           "texto": "Um encaixe circular está gravado na parede.",
           "requer": "Medalhão Valença",
@@ -171,10 +171,10 @@
           "id": "registro",
           "nome": "Registro enferrujado",
           "pos": [
-            70,
-            184,
-            176,
-            280
+            34,
+            187,
+            170,
+            292
           ],
           "texto": "No metal oxidado: 'A chama não ilumina o caminho; revela o que foi apagado.' Há fuligem recente ao redor da inscrição.",
           "item": "Inscrição antiga"
@@ -183,10 +183,10 @@
           "id": "vela",
           "nome": "Vela apagada",
           "pos": [
-            227,
-            178,
-            295,
-            276
+            300,
+            110,
+            349,
+            168
           ],
           "texto": "A vela apagada está fria, mas a cera ainda escorre. Na base, três letras foram gravadas de trás para frente: Z — U — L."
         },
@@ -194,10 +194,10 @@
           "id": "painel",
           "nome": "Painel de letras",
           "pos": [
-            342,
-            123,
-            462,
-            260
+            381,
+            133,
+            491,
+            289
           ],
           "texto": "O painel aceita uma palavra de três letras.",
           "codigo": "LUZ",
@@ -208,10 +208,10 @@
           "id": "grade",
           "nome": "Grade de ferro",
           "pos": [
-            494,
-            91,
-            606,
-            330
+            519,
+            36,
+            625,
+            338
           ],
           "texto": "A passagem está bloqueada até que o painel seja resolvido.",
           "requer": "Prova da conspiração",
@@ -229,10 +229,10 @@
           "id": "diario",
           "nome": "Diário escondido",
           "pos": [
-            67,
-            155,
-            198,
-            276
+            219,
+            191,
+            445,
+            315
           ],
           "texto": "As páginas revelam que Augusto Valença falsificou a morte de Helena para tomar a herança. Os criados foram pagos para mentir. A última página tem uma impressão digital ainda úmida.",
           "item": "Diário completo"
@@ -241,10 +241,10 @@
           "id": "altar",
           "nome": "Altar de pedra",
           "pos": [
-            255,
-            153,
-            391,
-            285
+            41,
+            55,
+            219,
+            276
           ],
           "texto": "Uma frase foi entalhada no altar: 'Uma prova acusa. Duas provam. Três condenam.' O espaço vazio no centro parece feito para o medalhão."
         },
@@ -252,10 +252,10 @@
           "id": "saida",
           "nome": "Portão de saída",
           "pos": [
-            443,
-            79,
-            574,
-            325
+            494,
+            24,
+            616,
+            337
           ],
           "texto": "O portão destrava com um estalo. Lá fora, uma sirene se aproxima. Você pode fugir agora ou levar as provas até a polícia — mas precisa ter reunido o diário e a prova do porão.",
           "final": true
