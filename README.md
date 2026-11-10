@@ -108,3 +108,8 @@ As imagens incluídas neste projeto foram desenhadas para este jogo e não são 
 
 ### Atualização
 Feche a versão anterior, extraia este ZIP em uma pasta nova e execute `python main.py` dentro da pasta que contém o arquivo principal. Não misture os arquivos antigos com os novos.
+
+
+## Dificuldade e narrativa
+
+A campanha oferece 20 minutos por partida, três tentativas por mecanismo, penalidade de 1 minuto por erro e custo de 1 minuto e 30 segundos por dica. O nível de alerta aumenta com erros. As pistas são ambientais e exigem relacionar informações encontradas em salas diferentes.
